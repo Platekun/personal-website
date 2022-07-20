@@ -224,7 +224,7 @@ function useController(props) {
   };
 
   const openFileByPressingEnter = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key !== 'Enter') {
       return;
     }
 
