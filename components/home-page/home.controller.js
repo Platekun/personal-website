@@ -3,8 +3,20 @@ import { useMemo } from 'react';
 import { assign, createMachine, spawn } from 'xstate';
 import { v4 as uuid } from 'uuid';
 
-import { MonthNamesMap } from '../../utils/months';
 import { ProcessMachine } from '../file-window/file-window.controller';
+import { File } from '../../models/file';
+import { Directory } from '../../models/directory';
+import { Workspace } from '../../models/workspace';
+
+import {
+  filaName,
+  h1,
+  list,
+  listItem,
+  text,
+  NEW_LINE,
+} from '../../utils/file-markup';
+import { MonthNamesMap } from '../../utils/months';
 
 function WorkspaceMachine(workspace) {
   return createMachine(
@@ -86,81 +98,26 @@ function WorkspaceMachine(workspace) {
   );
 }
 
-function findTarget(fieName, items) {
-  // Note: Only works for first level!
-  const item = items.find((currentItem) => {
-    return currentItem.name === fieName;
-  });
-
-  return item;
-}
-
-class File {
-  constructor(name, content) {
-    this.name = name;
-    this.content = content;
-  }
-}
-
-class Directory {
-  constructor(name, ...files) {
-    this.name = name;
-    this.files = files;
-  }
-}
-
-class Workspace {
-  constructor(...items) {
-    this.items = items;
-  }
-
-  get(targetName) {
-    return findTarget(targetName, this.items);
-  }
-}
-
-const NEW_LINE = '\n';
-
-function filaName(s) {
-  return `${s.toLowerCase()}.txt`;
-}
-
-function h1(s) {
-  return `<h1 class="mb-4">${s}</h1>`;
-}
-
-function list(s) {
-  return `<ul>${s}</ul>`;
-}
-
-function listItem(s) {
-  return `<li>${s}</li>`;
-}
-
-function text(s) {
-  return `<p>${s}</p>`;
-}
-
 function transformPropsToWorkspace(props) {
-  const profileFileName = filaName('profile');
-
-  const profileFileTitle = 'Professional Profile';
-
-  const profileFileContent =
-    h1(profileFileTitle) +
-    list(
-      props.profile.reduce(
-        (content, line) => content + listItem(text(line)) + NEW_LINE,
-        ''
-      )
-    );
-  const profileFile = new File(profileFileName, profileFileContent);
+  const profileFile = new File('profile', {
+    extension: 'md',
+    content:
+      h1('Professional Profile') +
+      list(
+        props.profile.reduce(
+          (content, line) => content + listItem(text(line)) + NEW_LINE,
+          ''
+        )
+      ),
+    initialWindowDimensions: {
+      width: 800,
+      height: 500,
+    },
+  });
 
   const experienceDirectory = new Directory(
     'experience',
     ...props.experience.map((workExperience) => {
-      const workExperienceFileName = filaName(workExperience.employer);
-
       const workExperienceFileTitle = `${workExperience.jobTitle.join(
         ' / '
       )}, ${workExperience.employer} (${
@@ -169,68 +126,74 @@ function transformPropsToWorkspace(props) {
         MonthNamesMap[workExperience.to.month]
       } ${workExperience.to.year})`;
 
-      const workExperienceFileContent =
-        h1(workExperienceFileTitle) +
-        list(
-          workExperience.description.reduce(
-            (content, line) => content + listItem(text(line)),
-            ''
-          )
-        );
-
-      return new File(workExperienceFileName, workExperienceFileContent);
+      return new File(workExperience.employer, {
+        extension: 'md',
+        content:
+          h1(workExperienceFileTitle) +
+          list(
+            workExperience.description.reduce(
+              (content, line) => content + listItem(text(line)),
+              ''
+            )
+          ),
+        initialWindowDimensions: {
+          width: 600,
+          height: 300,
+        },
+      });
     })
   );
 
-  const functionsFileName = filaName('functions');
+  const functionsFile = new File('functions', {
+    extension: 'md',
+    content:
+      h1('What I Do') +
+      list(
+        props.functions
+          .map((func) => func.description)
+          .reduce((content, line) => content + listItem(text(line)), '')
+      ),
+    initialWindowDimensions: {
+      width: 600,
+      height: 400,
+    },
+  });
 
-  const functionsFileTitle = 'What I Do';
+  const toolingFile = new File('tooling', {
+    extension: 'md',
+    content:
+      h1('Tools I use') +
+      list(
+        props.tooling.reduce((content, line) => content + listItem(text(line)))
+      ),
+    initialWindowDimensions: {
+      width: 400,
+      height: 200,
+    },
+  });
 
-  const functionsFileContent =
-    h1(functionsFileTitle) +
-    list(
-      props.functions
-        .map((func) => func.description)
-        .reduce((content, line) => content + listItem(text(line)), '')
-    );
+  const socialMediaFile = new File('social_media', {
+    extension: 'md',
+    content:
+      h1('Social Media') +
+      list(
+        Object.entries(props.socialMedia)
+          .map(([, url]) => `<a href="${url} target="_blank">${url}</a>`)
+          .reduce((content, line) => content + listItem(text(line)), '')
+      ),
+    initialWindowDimensions: {
+      width: 550,
+      height: 280,
+    },
+  });
 
-  const functionsFile = new File(functionsFileName, functionsFileContent);
-
-  const toolingFileName = filaName('tooling');
-
-  const toolingFileTitle = 'Tools I use';
-
-  const toolingFileContent =
-    h1(toolingFileTitle) +
-    list(
-      props.tooling.reduce((content, line) => content + listItem(text(line)))
-    );
-
-  const toolingFile = new File(toolingFileName, toolingFileContent);
-
-  const socialMediaFileName = filaName('social_media');
-
-  const socialMediaFileTitle = 'Social Media';
-
-  const socialMediaFileContent =
-    h1(socialMediaFileTitle) +
-    list(
-      Object.entries(props.socialMedia)
-        .map(([, url]) => `<a href="${url}">${url}</a>`)
-        .reduce((content, line) => content + listItem(text(line)), '')
-    );
-
-  const socialMediaFile = new File(socialMediaFileName, socialMediaFileContent);
-
-  const workspace = new Workspace(
+  return new Workspace(
     profileFile,
     experienceDirectory,
     functionsFile,
     toolingFile,
     socialMediaFile
   );
-
-  return workspace;
 }
 
 function useController(props) {

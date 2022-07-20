@@ -17,7 +17,7 @@ function Window(props) {
     <section
       id={windowId}
       className={classes(
-        'resize overflow-scroll absolute rounded-sm bg-black border-2 border-white border-solid min-w-[30%] max-w-100',
+        'resize overflow-scroll absolute rounded-sm bg-[#0A0A0A] border-2 border-white border-solid max-w-100',
         {
           'select-none': editable ? 'true' : 'false',
         }

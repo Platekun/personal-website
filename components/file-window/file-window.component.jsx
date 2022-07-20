@@ -47,7 +47,7 @@ function FileWindow(props) {
       >
         <div
           dangerouslySetInnerHTML={{ __html: data.content }}
-          className="p-6 text-white text-terminal text-2xl"
+          className="p-6 flex flex-col gap-6"
         />
       </pre>
     </Window>,

@@ -32,8 +32,8 @@ function WindowTitleBar(props) {
         </button>
       </div>
 
-      <span className="text-black font-bold text-terminal text-xl">
-        {title}
+      <span className="text-black font-bold text-bitwise text-lg">
+        {title.toUpperCase()}
       </span>
 
       {children}

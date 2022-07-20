@@ -11,6 +11,8 @@ function windowId(processId) {
 function ProcessMachine(options) {
   const { processId, target } = options;
 
+  console.info(target);
+
   return createMachine(
     {
       id: `Process (${processId})`,
@@ -22,8 +24,8 @@ function ProcessMachine(options) {
         title: target.name,
         content: target.content,
         dimensions: {
-          width: 0,
-          height: 0,
+          width: target.initialWindowDimensions.width,
+          height: target.initialWindowDimensions.height,
         },
         delta: {
           dx: 0,
@@ -42,10 +44,7 @@ function ProcessMachine(options) {
         setup: {
           always: {
             target: 'idle',
-            actions: [
-              'computeInitialWindownDimensions',
-              'notifyParentThatWindowWasSelected',
-            ],
+            actions: ['notifyParentThatWindowWasSelected'],
           },
         },
         idle: {
@@ -97,12 +96,6 @@ function ProcessMachine(options) {
           type: 'WINDOW_SELECTED',
           payload: {
             processId,
-          },
-        }),
-        computeInitialWindownDimensions: assign({
-          dimensions: {
-            width: 200,
-            height: 200,
           },
         }),
         resetPointer: assign({
