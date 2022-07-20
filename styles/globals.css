@@ -18,3 +18,14 @@ a {
 * {
   box-sizing: border-box;
 }
+
+@font-face {
+  font-family: 'VT323-Regular';
+  src: url('../public/VT323-Regular.ttf');
+  font-weight: 400;
+  font-style: normal;
+}
+
+.text-terminal {
+  font-family: 'VT323-Regular';
+}
