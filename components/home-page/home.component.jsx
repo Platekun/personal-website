@@ -21,7 +21,9 @@ function HomePage(props) {
         <main className="h-screen overflow-hidden  max-w-[1440px] my-0 mx-auto bg-[url('../public/kaneki-looking-at-city.png')] bg-no-repeat bg-[left_2rem_top_50%]">
           <header className="p-8 h-20 flex items-center justify-start">
             <h1 className="font-bold select-none">
-              <span className="text-4xl text-white text-bitwise">LobitOS</span>{' '}
+              <span className="text-4xl text-white text-bitwise">
+                wolf@future_widget_lab
+              </span>
             </h1>
           </header>
 
