@@ -1,7 +1,7 @@
+import { useEffect, useRef } from 'react';
 import { assign, createMachine, sendParent } from 'xstate';
 import { useActor } from '@xstate/react';
 
-import { useEffect, useRef } from 'react';
 import { useBodyReference } from '../../hooks/useBodyReference.hook';
 
 function windowId(processId) {
@@ -125,11 +125,6 @@ function ProcessMachine(options) {
           delta: (context, event) => {
             const { clientX, clientY } = event.payload;
 
-            console.info({
-              dx: clientX - context.pointer.x,
-              dy: clientY - context.pointer.y,
-            });
-
             return {
               dx: clientX - context.pointer.x,
               dy: clientY - context.pointer.y,
@@ -176,7 +171,7 @@ function useController(props) {
   const { process, order } = props;
 
   const [state, send] = useActor(process);
-  const appBarReference = useRef(null);
+  const windowTitleBarReference = useRef(null);
 
   const {
     context: {
@@ -230,7 +225,7 @@ function useController(props) {
     }
 
     const handleMouseMove = (event) => {
-      if (appBarReference === null) {
+      if (windowTitleBarReference === null) {
         return;
       }
 
@@ -264,7 +259,7 @@ function useController(props) {
 
   return {
     refs: {
-      appBarReference,
+      windowTitleBarReference,
     },
     data: {
       title,

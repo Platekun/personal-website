@@ -1,44 +1,8 @@
 import Head from 'next/head';
-import Image from 'next/image';
 
-import fileIcon from '../../public/file-icon.svg';
-import directoryIcon from '../../public/directory-icon.svg';
 import { useController } from './home.controller';
 import FileWindow from '../file-window';
-
-function WindowIconButton(props) {
-  const {
-    variant = 'file',
-    filename,
-    directoryName,
-    onDoubleClick,
-    onKeyPress,
-  } = props;
-
-  const iconSource =
-    variant === 'file'
-      ? fileIcon
-      : variant === 'directory'
-      ? directoryIcon
-      : null;
-
-  return (
-    <button
-      data-filename={filename}
-      data-directory-name={directoryName}
-      onDoubleClick={onDoubleClick}
-      onKeyPress={onKeyPress}
-      className="w-full flex flex-col justify-center items-center w-100 p-1 pt-3 rounded-sm select-none transition hover:bg-slate-700 focus:bg-slate-800 active:bg-slate-900"
-    >
-      <Image src={iconSource} height={67} width={67} />
-      <h3>
-        <span className="text-white text-xl text-center text-terminal">
-          {filename}
-        </span>
-      </h3>
-    </button>
-  );
-}
+import DesktopIconButton from '../deskop-icon-button';
 
 function HomePage(props) {
   const { computed, handlers } = useController(props);
@@ -65,7 +29,7 @@ function HomePage(props) {
           <section className="pr-8 pl-8 max-w-xl flex">
             <ul className="grid grid-cols-2 gap-4">
               <li className="w-full">
-                <WindowIconButton
+                <DesktopIconButton
                   variant="file"
                   filename="profile.txt"
                   onDoubleClick={handlers.openFile}
@@ -73,7 +37,7 @@ function HomePage(props) {
                 />
               </li>
               <li className="w-full">
-                <WindowIconButton
+                <DesktopIconButton
                   variant="directory"
                   filename="experience"
                   onDoubleClick={handlers.openFile}
@@ -81,7 +45,7 @@ function HomePage(props) {
                 />
               </li>
               <li className="w-full">
-                <WindowIconButton
+                <DesktopIconButton
                   variant="file"
                   filename="functions.txt"
                   onDoubleClick={handlers.openFile}
@@ -89,7 +53,7 @@ function HomePage(props) {
                 />
               </li>
               <li className="w-full">
-                <WindowIconButton
+                <DesktopIconButton
                   variant="file"
                   filename="social_media.txt"
                   onDoubleClick={handlers.openFile}
