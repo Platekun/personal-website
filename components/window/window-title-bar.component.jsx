@@ -2,23 +2,17 @@ import Image from 'next/image';
 import classes from 'classnames';
 
 import closeIcon from '../../public/close-icon.svg';
+import { useWindow } from './window.component';
 
 function WindowTitleBar(props) {
-  const {
-    reference,
-    title,
-    isIdle,
-    isDragging,
-    onWindowDragged,
-    onWindowClosed,
-    children,
-  } = props;
+  const { title, children } = props;
+
+  const { isIdle, isDragging, onWindowDragged, onWindowClosed } = useWindow();
 
   return (
     <header
-      ref={reference}
       className={classes(
-        'sticky top-0 h-8 w-full bg-white flex items-center justify-center border-sm border-2 border-black',
+        'sticky top-0 h-8 w-full bg-white flex items-center justify-center border-sm border-2 border-black z-[2]',
         {
           'cursor-grab': isIdle,
           'cursor-grabbing': isDragging,
@@ -28,7 +22,13 @@ function WindowTitleBar(props) {
     >
       <div className="absolute left-2">
         <button className="p-1 select-none" onClick={onWindowClosed}>
-          <Image src={closeIcon} height={12} width={12} />
+          <Image
+            src={closeIcon}
+            alt={`Close button for ${title}.`}
+            title="Close this window by clicking on this button."
+            height={12}
+            width={12}
+          />
         </button>
       </div>
 

@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 function useBodyReference() {
   const bodyReference = useRef(null);
 
-  useEffect(() => {
+  useEffect(function selectDocumentBody() {
     bodyReference.current = document.body;
   }, []);
 

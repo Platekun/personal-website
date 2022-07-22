@@ -9,6 +9,7 @@ const Resume = {
   experience: [
     {
       employer: 'TICOM.SA',
+      employerUrl: 'http://ticom.co/wordpress/',
       from: {
         month: 1,
         year: 2016,
@@ -23,9 +24,31 @@ const Resume = {
         'Worked on the internal ERP of the company. My time here was spent on the petty cash, invoices and cash flow movements modules.',
         'Business analysis and implementation of the domain design.',
       ],
+      images: [
+        {
+          source: 'https://lobito-personal-page.s3.amazonaws.com/ticom-erp.png',
+          alt: 'TICOM S.A ERP home screen',
+        },
+        {
+          source:
+            'https://lobito-personal-page.s3.amazonaws.com/ticom-erp-1.png',
+          alt: 'TICOM S.A ERP money management module example screen',
+        },
+        {
+          source:
+            'https://lobito-personal-page.s3.amazonaws.com/ticom-erp-2.png',
+          alt: 'TICOM S.A ERP money management module example screen',
+        },
+        {
+          source:
+            'https://lobito-personal-page.s3.amazonaws.com/ticom-erp-3.png',
+          alt: 'TICOM S.A ERP cash flow module example screen',
+        },
+      ],
     },
     {
       employer: 'NativApps',
+      employerUrl: 'https://nativapps.com',
       from: {
         month: 2,
         year: 2017,
@@ -40,9 +63,27 @@ const Resume = {
         'Front-End development in an analytics dashboard project for a private health insurance provider.',
         'Maintenance of BeGirl’s mobile application: An application to empower women with the tools to track their menstrual cycles.',
       ],
+      images: [
+        {
+          source:
+            'https://lobito-personal-page.s3.amazonaws.com/be-girl-1.jpeg',
+          alt: 'BeGirl application ovulation tracking',
+        },
+        {
+          source:
+            'https://lobito-personal-page.s3.amazonaws.com/be-girl-2.jpeg',
+          alt: 'BeGirl application ovulation calendar',
+        },
+        {
+          source:
+            'https://lobito-personal-page.s3.amazonaws.com/be-girl-3.jpeg',
+          alt: 'BeGirl application ovulation information',
+        },
+      ],
     },
     {
       employer: 'Ideaware',
+      employerUrl: 'https://ideaware.co',
       from: {
         month: 7,
         year: 2018,
@@ -58,9 +99,27 @@ const Resume = {
         'Built the UI for Get Luna’s patients’ form: A single page application form used by patients or by their doctors to track their progress in different areas; The application also provides a therapist-specific view of the evolution of a specific patient.',
         "Built the UI for Get Luna's therapist dashboard: A single page dashboard used by therapist to filter out and observe data according to a patient sample.",
       ],
+      images: [
+        {
+          source:
+            'https://lobito-personal-page.s3.amazonaws.com/luna-intake-form-first-part.png',
+          alt: 'LunaCare intake form first screen',
+        },
+        {
+          source:
+            'https://lobito-personal-page.s3.amazonaws.com/luna-care-credentialing-form.png',
+          alt: 'LunaCare credentialing form example screen',
+        },
+        {
+          source:
+            'https://lobito-personal-page.s3.amazonaws.com/luna-dashboard.png',
+          alt: 'LunaCare credentialing dashboard example',
+        },
+      ],
     },
     {
       employer: 'Zemoga',
+      employerUrl: 'https://zemoga.com',
       from: {
         month: 4,
         year: 2020,
@@ -74,6 +133,18 @@ const Resume = {
         'Main technologies: React.js, Next.js and Node.js.',
         "Worked on Sony's Competition Center: A multipage website that aims to elevate Sony’s competitive play to the next level by offering tournaments and competitive gaming content, curated based on your favorite titles.",
         'My role involved developing new features, problem solving, release management, task prioritization and collaboration with the business analysts and designers.',
+      ],
+      images: [
+        {
+          source:
+            'https://lobito-personal-page.s3.amazonaws.com/sony-competition-center.jpeg',
+          alt: 'Sony Competition Center old experience',
+        },
+        {
+          source:
+            'https://lobito-personal-page.s3.amazonaws.com/sony-competition-center-colombia',
+          alt: 'Sony Competition Center recent experience',
+        },
       ],
     },
   ],
@@ -101,7 +172,7 @@ const Resume = {
   ],
   tooling: ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'React', 'Node.js'],
   socialMedia: {
-    twitter: 'https://twitter.com/ccamilo_lobo',
+    twitter: 'https://twitter.com/lobitodotdev',
     linkedIn: 'https://www.linkedin.com/in/carlos-camilo-lobo/',
     gitHub: 'https://github.com/Platekun',
   },
