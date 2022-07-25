@@ -2,9 +2,18 @@ import Image from 'next/image';
 
 import documentIcon from '../../public/file-icon.svg';
 import directoryIcon from '../../public/directory-icon.svg';
+import { useRemoveClassesWhenAnimationEnds } from '../../hooks/useRemoveClassesWhenAnimationEnds';
+import { useRef } from 'react';
 
 function FileIconButton(props) {
-  const { variant = 'document', filename, fileId, ...rest } = props;
+  const { variant = 'document', filename, fileId, className, ...rest } = props;
+
+  const reference = useRef(null);
+
+  useRemoveClassesWhenAnimationEnds({
+    reference,
+    classes: ['opacity-0', 'animate-fade-in', 'pointer-events-none'],
+  });
 
   const source =
     variant === 'document'
@@ -15,7 +24,8 @@ function FileIconButton(props) {
 
   return (
     <button
-      className="w-32 flex flex-col justify-center items-center w-100 p-1 pt-3 rounded-sm select-none transition hover:bg-slate-700 focus:bg-slate-800 active:bg-slate-900"
+      ref={reference}
+      className="w-32 flex flex-col justify-center items-center w-100 p-1 pt-3 rounded-sm select-none transition  hover:bg-slate-700 focus:bg-slate-800 active:bg-slate-900 animate-fade-in opacity-0 pointer-events-none"
       data-file-id={fileId}
       {...rest}
     >

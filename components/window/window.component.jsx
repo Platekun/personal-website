@@ -11,13 +11,14 @@ function useWindow() {
 
 function Window(props) {
   const { children } = props;
-  const { data, computed, handlers } = useController(props);
+  const { refs, data, computed, handlers } = useController(props);
 
   return (
     <section
+      ref={refs.sectionReference}
       id={computed.windowId}
       className={classes(
-        'resize overflow-scroll absolute rounded-sm bg-[#0A0A0A] border-2 border-white border-solid max-w-100',
+        'resize overflow-scroll absolute rounded-sm bg-[#0A0A0A] border-2 border-white border-solid max-w-100 opacity-0 animate-pop-and-fade',
         {
           'select-none': data.allowMouseSelection ? 'true' : 'false',
         }

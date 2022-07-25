@@ -1,8 +1,9 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { assign, createMachine } from 'xstate';
 import { useMachine } from '@xstate/react';
 
 import { useBodyReference } from '../../hooks/useBodyReference.hook';
+import { useRemoveClassesWhenAnimationEnds } from '../../hooks/useRemoveClassesWhenAnimationEnds';
 import { createWindowId } from '../../utils/createWindowId';
 
 function WindowMachine(options) {
@@ -132,6 +133,13 @@ function useController(props) {
     allowMouseSelection,
   } = props;
 
+  const sectionReference = useRef(null);
+
+  useRemoveClassesWhenAnimationEnds({
+    reference: sectionReference,
+    classes: ['animate-pop-and-fade', 'opacity-0'],
+  });
+
   const windowId = createWindowId(proccessId);
 
   const windowMachine = useMemo(function computeWindowMachine() {
@@ -214,7 +222,9 @@ function useController(props) {
   );
 
   return {
-    refs: {},
+    refs: {
+      sectionReference,
+    },
     data: {
       dimensions,
       delta,

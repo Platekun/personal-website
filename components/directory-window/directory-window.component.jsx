@@ -19,7 +19,7 @@ function DirectoryWindow(props) {
       <WindowTitleBar title={data.title} />
 
       <ul className="p-4 flex flex-row flex-wrap gap-4">
-        {computed.contents.map((fileOrDirectory) => (
+        {computed.contents.map((fileOrDirectory, index) => (
           <li key={fileOrDirectory.id}>
             <FileIconButton
               variant={fileOrDirectory.contentType}
@@ -27,6 +27,9 @@ function DirectoryWindow(props) {
               filename={fileOrDirectory.filename}
               onDoubleClick={handlers.openFile}
               onKeyPress={handlers.openFileByPressingEnter}
+              style={{
+                animationDelay: `${index / 5}s`,
+              }}
             />
           </li>
         ))}
