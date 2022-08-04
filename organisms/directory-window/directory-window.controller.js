@@ -2,7 +2,7 @@ import { createMachine, sendParent } from 'xstate';
 import { useActor } from '@xstate/react';
 
 import { Directory } from '../../models/directory';
-import { useOpenFileHandlers } from '../../hooks/useOpenFileProps.hook';
+import { useOpenFile } from '../file-icon-button/useOpenFile.hook';
 
 function DirectoryProccessMachine(options) {
   const { processId, directory } = options;
@@ -83,10 +83,14 @@ function useController(props) {
     context: { processId, title, contents: directoryContents, dimensions },
   } = state;
 
-  const { openFile, openFileByPressingEnter } = useOpenFileHandlers(
-    send,
-    'PROCCESS_INITIALIZATION_REQUESTED'
-  );
+  const { openFileWithMouse, openFileWithKeyboard } = useOpenFile({
+    onOpenFile: (fileId) => {
+      send({
+        type: 'PROCCESS_INITIALIZATION_REQUESTED',
+        payload: { fileId },
+      });
+    },
+  });
 
   const selectWindow = () => {
     send({
@@ -130,8 +134,8 @@ function useController(props) {
       selectWindow,
       toggleEdition,
       terminateProccess,
-      openFile,
-      openFileByPressingEnter,
+      openFileWithMouse,
+      openFileWithKeyboard,
     },
   };
 }

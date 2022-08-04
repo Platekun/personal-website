@@ -29,8 +29,8 @@ function DirectoryWindow(props) {
               variant={fileOrDirectory.contentType}
               fileId={fileOrDirectory.fileId}
               filename={fileOrDirectory.filename}
-              onDoubleClick={handlers.openFile}
-              onKeyPress={handlers.openFileByPressingEnter}
+              onDoubleClick={handlers.openFileWithMouse}
+              onKeyPress={handlers.openFileWithKeyboard}
               animate={true}
               animationDelay={`${index / 5}s`}
             />

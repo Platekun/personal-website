@@ -107,8 +107,8 @@ function HomePageTemplate(props) {
                         fileId={fileOrDirectory.fileId}
                         filename={fileOrDirectory.filename}
                         entryFilename={fileOrDirectory.entryFilename}
-                        onDoubleClick={handlers.openFile}
-                        onKeyPress={handlers.openFileByPressingEnter}
+                        onDoubleClick={handlers.openFileWithMouse}
+                        onKeyPress={handlers.openFileWithKeyboard}
                         animate={!computed.isMobile}
                         animationDelay={`${
                           INITIAL_ANIMATION_DELAY_IN_SECONDS *

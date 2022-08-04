@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid';
 import computeIsMobile from 'ismobilejs';
 
 import { useTransformer } from 'hooks/useTransformer.hook';
-import { useOpenFileHandlers } from 'hooks/useOpenFileProps.hook';
+import { useOpenFile } from 'organisms/file-icon-button/useOpenFile.hook';
 import { usePageProps } from 'hooks/usePageProps.hook';
 import { DirectoryProccessMachine } from 'organisms/directory-window/directory-window.controller';
 import { DocumentProccessMachine } from 'organisms/document-window/document-window.controller';
@@ -222,10 +222,14 @@ function useController(props) {
     context: { processes: processesMap, windowsStack },
   } = state;
 
-  const { openFile, openFileByPressingEnter } = useOpenFileHandlers(
-    send,
-    'PROCCESS_INITIALIZATION_REQUESTED'
-  );
+  const { openFileWithMouse, openFileWithKeyboard } = useOpenFile({
+    onOpenFile: (fileId) => {
+      send({
+        type: 'PROCCESS_INITIALIZATION_REQUESTED',
+        payload: { fileId },
+      });
+    },
+  });
 
   const contents = desktop.contents.map((fileOrDirectory) => {
     return {
@@ -269,8 +273,8 @@ function useController(props) {
     },
     data: {},
     handlers: {
-      openFile,
-      openFileByPressingEnter,
+      openFileWithMouse,
+      openFileWithKeyboard,
     },
   };
 }
