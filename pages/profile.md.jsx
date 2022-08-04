@@ -14,12 +14,12 @@ export function getServerSideProps(context) {
 
   const ssr = isSsr();
 
-  const isMobileSsr = computeIsMobileSsr(request);
+  const ssrIsMobile = computeIsMobileSsr(request);
 
   return {
     props: {
       ssr,
-      isMobileSsr,
+      ssrIsMobile,
       profile: Resume.profile,
     },
   };

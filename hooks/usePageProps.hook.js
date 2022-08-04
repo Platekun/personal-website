@@ -1,7 +1,6 @@
 import { createContext, useContext } from 'react';
 
 import { useIsMobile } from './useIsMobile';
-import { useBreakpoint } from './useBreakpoint';
 
 const context = createContext(null);
 
@@ -12,31 +11,15 @@ function usePageProps() {
 }
 
 function PageProvider(pageProps) {
-  const { ssr, isMobileSsr, children } = pageProps;
+  const { ssr, ssrIsMobile, children } = pageProps;
 
-  const isMobile = useIsMobile(isMobileSsr);
-
-  const breakpoint = useBreakpoint();
-
-  const isSm = breakpoint === 'sm';
-  const isMd = breakpoint === 'md';
-  const isLg = breakpoint === 'lg';
-  const isXl = breakpoint === 'xl';
-  const is2Xl = breakpoint === '2xl';
+  const isMobile = useIsMobile(ssrIsMobile);
 
   return (
     <Provider
       value={{
-        isMobile,
-        breakpoint,
-        breakpointHelpers: {
-          isSm,
-          isMd,
-          isLg,
-          isXl,
-          is2Xl,
-        },
         ssr,
+        isMobile,
       }}
     >
       {children}

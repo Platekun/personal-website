@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import classes from 'classnames';
 
 import Head from 'atoms/head';
@@ -8,7 +7,7 @@ import FileIconButton from 'organisms/file-icon-button';
 import DocumentWindow from 'organisms/document-window';
 import DirectoryWindow from 'organisms/directory-window';
 
-const INITIAL_ANIMATION_DELAY_IN_SECONDS = 1;
+const INITIAL_ANIMATION_DELAY_IN_SECONDS = 0.5;
 const FADE_IN_DURATION_IN_SECONDS = 0.5;
 
 function HomePageTemplate(props) {
@@ -31,8 +30,9 @@ function HomePageTemplate(props) {
       >
         <div className={classes('w-full max-w-7xl mx-auto', 'sm:h-full')}>
           <Header
+            asLink={false}
             animate={!computed.isMobile}
-            animationDelay={`${3 * INITIAL_ANIMATION_DELAY_IN_SECONDS}s`}
+            animationDelay={`${4 * INITIAL_ANIMATION_DELAY_IN_SECONDS}s`}
           />
 
           <div
@@ -97,7 +97,9 @@ function HomePageTemplate(props) {
                 >
                   {computed.contents.map((fileOrDirectory, index) => (
                     <li
-                      key={fileOrDirectory.fileId}
+                      key={`fileId:${
+                        fileOrDirectory.fileId
+                      }-isMobile:${computed.isMobile.toString()}`}
                       className={classes('w-24', 'sm:w-32')}
                     >
                       <FileIconButton

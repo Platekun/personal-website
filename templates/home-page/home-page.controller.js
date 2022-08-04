@@ -1,7 +1,7 @@
 import { useMachine } from '@xstate/react';
-import { useMemo } from 'react';
 import { assign, createMachine, spawn } from 'xstate';
 import { v4 as uuid } from 'uuid';
+import computeIsMobile from 'ismobilejs';
 
 import { useTransformer } from 'hooks/useTransformer.hook';
 import { useOpenFileHandlers } from 'hooks/useOpenFileProps.hook';
@@ -27,6 +27,24 @@ function OperativeSystemMachine(desktop) {
       },
       states: {
         idle: {
+          invoke: {
+            id: 'cleanup',
+            src: () => (callback) => {
+              const handleWindowResize = () => {
+                const isMobile = computeIsMobile().any;
+
+                if (isMobile) {
+                  callback({ type: 'PROCESSES_TERMINATED' });
+                }
+              };
+
+              window.addEventListener('resize', handleWindowResize);
+
+              return () => {
+                window.removeEventListener('resize', handleWindowResize);
+              };
+            },
+          },
           on: {
             PROCCESS_INITIALIZATION_REQUESTED: {
               actions: ['initializeProccess'],
@@ -36,6 +54,9 @@ function OperativeSystemMachine(desktop) {
             },
             PROCCESS_TERMINATED: {
               actions: ['terminateProcess'],
+            },
+            PROCESSES_TERMINATED: {
+              actions: ['terminateProcesses'],
             },
           },
         },
@@ -106,6 +127,15 @@ function OperativeSystemMachine(desktop) {
             return {
               ...context.processes,
             };
+          },
+        }),
+        terminateProcesses: assign({
+          processes: (context) => {
+            Object.values(context.processes).forEach((processValue) => {
+              processValue.reference.stop();
+            });
+
+            return {};
           },
         }),
       },

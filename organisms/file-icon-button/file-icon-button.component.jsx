@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 import documentIcon from 'public/file-icon.svg';
 import directoryIcon from 'public/directory-icon.svg';
-import { useRemoveClassesWhenAnimationEnds } from 'hooks/useRemoveClassesWhenAnimationEnds.hook';
+import { useCssAnimationCleanup } from 'hooks/useCssAnimationCleanup.hook';
 
 function FileIconButton(props) {
   const {
@@ -15,17 +15,26 @@ function FileIconButton(props) {
     fileId,
     onDoubleClick,
     onKeyPress,
-    style,
     animate,
     animationDelay,
   } = props;
 
   const reference = useRef(null);
 
-  useRemoveClassesWhenAnimationEnds({
-    reference,
-    classes: ['opacity-0', 'animate-fade-in', 'pointer-events-none'],
-  });
+  useCssAnimationCleanup(reference, [
+    'opacity-0',
+    'animate-fade-in',
+    'pointer-events-none',
+  ]);
+
+  const iconElementClasses = classes(
+    'w-full flex flex-col justify-center items-center p-1 pt-3 rounded-sm select-none transition  hover:bg-sky-700 focus:bg-sky-800 active:bg-[#0AC9EE]',
+    {
+      'animate-fade-in opacity-0 pointer-events-none': animate,
+    }
+  );
+
+  const iconElementStyles = animate ? { animationDelay } : {};
 
   const source =
     variant === 'document'
@@ -45,13 +54,8 @@ function FileIconButton(props) {
     >
       <a
         ref={reference}
-        className={classes(
-          'w-full flex flex-col justify-center items-center p-1 pt-3 rounded-sm select-none transition hover:bg-[#219AD6] focus:bg-[#219AD6] active:bg-[#219AD6]',
-          {
-            'animate-fade-in opacity-0 pointer-events-none': animate,
-          }
-        )}
-        style={animate ? { animationDelay } : {}}
+        className={iconElementClasses}
+        style={iconElementStyles}
       >
         <Image
           src={source}
@@ -75,16 +79,11 @@ function FileIconButton(props) {
   ) : (
     <button
       ref={reference}
-      className={classes(
-        'w-full flex flex-col justify-center items-center p-1 pt-3 rounded-sm select-none transition  hover:bg-sky-700 focus:bg-sky-800 active:bg-[#0AC9EE]',
-        {
-          'animate-fade-in opacity-0 pointer-events-none': animate,
-        }
-      )}
+      className={iconElementClasses}
       data-file-id={fileId}
       onDoubleClick={onDoubleClick}
       onKeyPress={onKeyPress}
-      style={animate ? { animationDelay } : {}}
+      style={iconElementStyles}
     >
       <Image
         src={source}

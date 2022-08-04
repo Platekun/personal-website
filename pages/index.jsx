@@ -11,13 +11,13 @@ export function getServerSideProps(context) {
 
   const ssr = isSsr();
 
-  const isMobileSsr = computeIsMobileSsr(request);
+  const ssrIsMobile = computeIsMobileSsr(request);
 
   return {
     props: {
       Resume,
       ssr,
-      isMobileSsr,
+      ssrIsMobile,
     },
   };
 }

@@ -3,7 +3,7 @@ import { assign, createMachine } from 'xstate';
 import { useMachine } from '@xstate/react';
 
 import { useBodyReference } from 'hooks/useBodyReference.hook';
-import { useRemoveClassesWhenAnimationEnds } from 'hooks/useRemoveClassesWhenAnimationEnds.hook';
+import { useCssAnimationCleanup } from 'hooks/useCssAnimationCleanup.hook';
 import { createWindowId } from 'utils/createWindowId';
 
 function WindowMachine(options) {
@@ -135,10 +135,10 @@ function useController(props) {
 
   const sectionReference = useRef(null);
 
-  useRemoveClassesWhenAnimationEnds({
-    reference: sectionReference,
-    classes: ['animate-pop-and-fade', 'opacity-0'],
-  });
+  useCssAnimationCleanup(sectionReference, [
+    'animate-pop-and-fade',
+    'opacity-0',
+  ]);
 
   const windowId = createWindowId(proccessId);
 

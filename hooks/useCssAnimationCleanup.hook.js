@@ -1,7 +1,15 @@
 import { useEffect } from 'react';
 
-function useRemoveClassesWhenAnimationEnds({ reference, classes }) {
+function useCssAnimationCleanup(reference, classes) {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
   useEffect(() => {
+    if (reference.current === null) {
+      return;
+    }
+
     const handleAnimationEnd = () => {
       classes.forEach((className) => {
         reference.current.classList.remove(className);
@@ -24,4 +32,4 @@ function useRemoveClassesWhenAnimationEnds({ reference, classes }) {
   }, [reference]);
 }
 
-export { useRemoveClassesWhenAnimationEnds };
+export { useCssAnimationCleanup };

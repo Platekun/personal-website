@@ -1,8 +1,16 @@
 import Link from 'next/link';
 import classes from 'classnames';
 
+const HEADER_TEXT = 'Future Widget Lab';
+
 function Header(props) {
-  const { animate = false, animationDelay, style, ...rest } = props;
+  const {
+    asLink = true,
+    animate = false,
+    animationDelay,
+    style,
+    ...rest
+  } = props;
 
   return (
     <header
@@ -23,9 +31,13 @@ function Header(props) {
         <span
           className={classes('text-xl text-white text-bitwise', 'sm:text-4xl')}
         >
-          <Link href="/">
-            <a>Future Widget Lab</a>
-          </Link>
+          {asLink ? (
+            <Link href="/">
+              <a>{HEADER_TEXT}</a>
+            </Link>
+          ) : (
+            HEADER_TEXT
+          )}
         </span>
       </h1>
     </header>
