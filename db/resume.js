@@ -57,7 +57,7 @@ const Resume = {
         month: 3,
         year: 2018,
       },
-      jobTitle: ['Back-End Developer', 'Front-End Developer'],
+      jobTitle: ['Front-End Developer'],
       description: [
         'Main technologies: React.js, Redux and Ionic.',
         'Front-End development in an analytics dashboard project for a private health insurance provider.',
@@ -170,11 +170,59 @@ const Resume = {
       description: 'Build UI cross-browser and multi-device functionalities.',
     },
   ],
-  tooling: ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'React', 'Node.js'],
+  tooling: [
+    {
+      name: 'HTML',
+      description:
+        'It defines the meaning and structure of web content. It uses "markup" to annotate text, images, and other content for display in a Web browser.',
+      source: 'https://developer.mozilla.org/en-US/docs/Web/html',
+    },
+    {
+      name: 'CSS',
+      description:
+        'Cascading Style Sheets (CSS) is a stylesheet language used to describe the presentation of a document written in HTML. It describes how elements should be rendered on screen, on paper, in speech, or on other media.',
+      source: 'https://developer.mozilla.org/en-US/docs/Web/css',
+    },
+    {
+      name: 'JavaScript',
+      description:
+        'JavaScript (JS) is a programming language with first-class functions most well-known as the scripting language for Web pages.',
+      source: 'https://developer.mozilla.org/en-US/docs/Web/javascript',
+    },
+    {
+      name: 'TypeScript',
+      description:
+        'TypeScript is a strongly typed programming language that adds additional syntax to JavaScript, giving you better tooling by allowing to describe the shape of data.',
+      source: 'https://www.typescriptlang.org',
+    },
+    {
+      name: 'React.js',
+      description: 'A JavaScript library for building user interfaces.',
+      source: 'https://reactjs.org',
+    },
+    {
+      name: 'XState',
+      description:
+        'XState is a library for modeling behavior as finite state machines and statecharts.',
+      source: 'https://xstate.js.org/docs/',
+    },
+    {
+      name: 'Node.js',
+      description:
+        'A JavaScript runtime environment that runs the V8 JavaScript engine, the core of Google Chrome, outside of the browser.',
+      source: 'https://nodejs.dev/learn',
+    },
+    {
+      name: 'Next.js',
+      description:
+        'Next.js is a React framework that provides building blocks to build static and dynamic websites and web apps.',
+      source: 'https://nextjs.org/',
+    },
+  ],
   socialMedia: {
-    twitter: 'https://twitter.com/lobitodotdev',
-    linkedIn: 'https://www.linkedin.com/in/carlos-camilo-lobo/',
-    gitHub: 'https://github.com/Platekun',
+    Twitter: 'https://twitter.com/lobitodotdev',
+    LinkedIn: 'https://www.linkedin.com/in/carlos-camilo-lobo/',
+    GitHub: 'https://github.com/Platekun',
   },
 };
 

@@ -6,6 +6,9 @@ const nextConfig = {
     locales: ['en'],
     defaultLocale: 'en',
   },
+  images: {
+    domains: ['lobito-personal-page.s3.amazonaws.com'],
+  },
 };
 
 module.exports = nextConfig;
