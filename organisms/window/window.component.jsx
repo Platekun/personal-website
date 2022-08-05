@@ -18,7 +18,7 @@ function Window(props) {
       ref={refs.sectionReference}
       id={computed.windowId}
       className={classes(
-        'resize overflow-hidden absolute rounded-sm bg-[#091432] opacity-0 border-4 rounded-tr-3xl rounded-bl-3xl border-[#0AC9EE] border-double max-w-100',
+        'resize overflow-hidden absolute rounded-sm bg-[#091432] opacity-0 border-4 rounded-tr-3xl rounded-bl-3xl border-[#0AC9EE] border-double min-w-[30em] max-w-100',
         {
           'select-none': !data.isSelectionEnabled ? 'false' : 'true',
         }
