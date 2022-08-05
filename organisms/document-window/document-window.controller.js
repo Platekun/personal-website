@@ -68,7 +68,7 @@ function DocumentProccessMachine(options) {
 }
 
 function useController(props) {
-  const { process, order } = props;
+  const { process, order, isActive } = props;
 
   const [state, send] = useActor(process);
 
@@ -101,6 +101,7 @@ function useController(props) {
       title,
       content,
       order,
+      isActive,
       dimensions,
     },
     computed: {

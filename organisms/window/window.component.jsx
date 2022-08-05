@@ -21,7 +21,7 @@ function Window(props) {
         'resize overflow-hidden absolute rounded-sm bg-[#091432] opacity-90 border-4 rounded-tr-3xl rounded-bl-3xl border-[#0AC9EE] border-double max-w-100',
         'opacity-0 animate-pop-and-fade',
         {
-          'select-none': data.allowMouseSelection ? 'true' : 'false',
+          'select-none': !data.isSelectionEnabled ? 'false' : 'true',
         }
       )}
       style={{
@@ -32,7 +32,9 @@ function Window(props) {
         width: data.dimensions.width,
         height: data.dimensions.height,
         zIndex: data.order,
+        filter: data.isActive ? 'brightness(1)' : 'brightness(0.5)',
       }}
+      data-windowsStackIndex={data.windowsStackIndex}
       onMouseDown={handlers.selectWindow}
     >
       <WindowContext.Provider

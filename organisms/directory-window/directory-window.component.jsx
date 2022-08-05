@@ -13,9 +13,10 @@ function DirectoryWindow(props) {
       proccessId={data.processId}
       dimensions={data.dimensions}
       order={data.order}
+      isActive={data.isActive}
       onSelected={handlers.selectWindow}
       onClosed={handlers.terminateProccess}
-      allowMouseSelection={!computed.isDragging}
+      isSelectionEnabled={!computed.isDragging}
     >
       <WindowTitleBar title={data.title} />
 

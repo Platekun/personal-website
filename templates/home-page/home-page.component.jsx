@@ -131,6 +131,7 @@ function HomePageTemplate(props) {
                 key={process.processId}
                 process={process.reference}
                 order={process.order}
+                isActive={process.processId === computed.topProccessId}
               />
             );
           } else {
@@ -139,6 +140,7 @@ function HomePageTemplate(props) {
                 key={process.processId}
                 process={process.reference}
                 order={process.order}
+                isActive={process.processId === computed.topProccessId}
               />
             );
           }

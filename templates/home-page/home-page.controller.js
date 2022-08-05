@@ -70,6 +70,14 @@ function OperativeSystemMachine(desktop) {
               payload: { fileId },
             } = event;
 
+            const isThereAProccessWithTheSameFileRunning = Object.values(
+              context.processes
+            ).find((proccessValue) => proccessValue.fileId === fileId);
+
+            if (isThereAProccessWithTheSameFileRunning) {
+              return context.processes;
+            }
+
             const processId = uuid();
 
             const searchResult = desktop.search(fileId);
@@ -91,6 +99,7 @@ function OperativeSystemMachine(desktop) {
             return {
               ...context.processes,
               [processId]: {
+                fileId,
                 isDirectory,
                 reference,
               },
@@ -106,9 +115,9 @@ function OperativeSystemMachine(desktop) {
 
             return [
               processId,
-              ...windowsStack.filter((currentProccessId) => {
-                return currentProccessId !== processId;
-              }),
+              ...windowsStack.filter(
+                (currentProccessId) => currentProccessId !== processId
+              ),
             ];
           },
         }),
@@ -263,12 +272,17 @@ function useController(props) {
     };
   });
 
+  const [{ processId: topProccessId } = { processId: null }] = processes.sort(
+    (a, b) => b.order - a.order
+  );
+
   return {
     refs: {},
     computed: {
       isMobile,
       contents,
       processes,
+      topProccessId,
       ...breakpointHelpers,
     },
     data: {},

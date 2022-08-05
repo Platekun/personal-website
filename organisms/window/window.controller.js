@@ -128,9 +128,10 @@ function useController(props) {
     proccessId,
     dimensions,
     order,
+    isActive,
     onSelected,
     onClosed,
-    allowMouseSelection,
+    isSelectionEnabled,
   } = props;
 
   const sectionReference = useRef(null);
@@ -230,7 +231,8 @@ function useController(props) {
       delta,
       anchor,
       order,
-      allowMouseSelection,
+      isActive,
+      isSelectionEnabled,
     },
     computed: {
       isIdle,
