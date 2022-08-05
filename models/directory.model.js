@@ -1,5 +1,7 @@
 import toBase64 from 'btoa';
 
+import { DisplayInformation } from './display-information.model';
+
 class Directory {
   constructor(name, options) {
     const { contents, initialWindowDimensions } = options;
@@ -16,12 +18,18 @@ class Directory {
       typeof initialWindowDimensions !== 'undefined' &&
       initialWindowDimensions !== null
     ) {
-      this.initialWindowDimensions = initialWindowDimensions;
+      this.displayInformation = new DisplayInformation({
+        dimensions: initialWindowDimensions,
+      });
     }
   }
 
-  setWindowCoordinates(value) {
-    this.initialWindowCoordinates = value;
+  get initialDimensions() {
+    return this.displayInformation.initialWindowDimensions;
+  }
+
+  get initialCoordinates() {
+    return this.displayInformation.initialWindowCoordinates;
   }
 
   search(id) {

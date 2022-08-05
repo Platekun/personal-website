@@ -13,8 +13,8 @@ function DocumentProccessMachine(options) {
         title: document.name,
         content: document.content,
         editing: false,
-        dimensions: document.initialWindowDimensions,
-        coordinates: document.initialWindowCoordinates,
+        dimensions: document.initialDimensions,
+        coordinates: document.initialCoordinates,
       },
       states: {
         setup: {

@@ -1,7 +1,7 @@
 import { createMachine, sendParent } from 'xstate';
 import { useActor } from '@xstate/react';
 
-import { Directory } from '../../models/directory';
+import { Directory } from '../../models/directory.model';
 import { useOpenFile } from '../file-icon-button/useOpenFile.hook';
 
 function DirectoryProccessMachine(options) {
@@ -15,8 +15,8 @@ function DirectoryProccessMachine(options) {
         processId,
         title: directory.name,
         contents: directory.contents,
-        dimensions: directory.initialWindowDimensions,
-        coordinates: directory.initialWindowCoordinates,
+        dimensions: directory.initialDimensions,
+        coordinates: directory.initialCoordinates,
       },
       states: {
         setup: {

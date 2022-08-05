@@ -8,32 +8,13 @@ import { useOpenFile } from 'organisms/file-icon-button/useOpenFile.hook';
 import { usePageProps } from 'hooks/usePageProps.hook';
 import { DirectoryProccessMachine } from 'organisms/directory-window/directory-window.controller';
 import { DocumentProccessMachine } from 'organisms/document-window/document-window.controller';
-import { File } from 'models/file';
-import { Directory } from 'models/directory';
+import { File } from 'models/file.model';
+import { Directory } from 'models/directory.model';
 import { createProfileContent } from 'transformers/resume-profile.transformer';
 import { createExperienceContent } from 'transformers/resume-work-experience.transformer';
 import { createFunctionsContent } from 'transformers/resume-functions.transformer';
 import { createToolingContent } from 'transformers/resume-tooling.transformer';
 import { createSocialMediaContent } from 'transformers/resume-social-media.transformer';
-
-function computeWindowCoordinates() {
-  // TODO: One could ellaborate a proper method to compute a random (x, y) taking into account the dimensions of each file's window.
-
-  const width =
-    window.innerWidth ||
-    document.documentElement.clientWidth ||
-    document.body.clientWidth;
-
-  const height =
-    window.innerHeight ||
-    document.documentElement.clientHeight ||
-    document.body.clientHeight;
-
-  return {
-    x: width / 3,
-    y: height / 5,
-  };
-}
 
 function OperativeSystemMachine(desktop) {
   return createMachine(
@@ -100,8 +81,6 @@ function OperativeSystemMachine(desktop) {
             const processId = uuid();
 
             const searchResult = desktop.search(fileId);
-
-            searchResult.setWindowCoordinates(computeWindowCoordinates());
 
             const isDirectory = searchResult instanceof Directory;
 
