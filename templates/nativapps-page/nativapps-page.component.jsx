@@ -4,8 +4,8 @@ import classes from 'classnames';
 
 import Head from 'atoms/head';
 import Header from 'atoms/header';
-import arrowForwardIcon from 'public/arrow-forward-outline.svg';
-import arrowBackIcon from 'public/arrow-back-outline.svg';
+import arrowForwardIcon from 'public/arrow-forward-icon.svg';
+import arrowBackIcon from 'public/arrow-back-icon.svg';
 import { useController } from './nativapps-page.controller';
 
 function NativAppsPageTemplate(props) {

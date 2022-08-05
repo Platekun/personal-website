@@ -4,7 +4,7 @@ import classes from 'classnames';
 
 import Head from 'atoms/head';
 import Header from 'atoms/header';
-import arrowForwardIcon from 'public/arrow-forward-outline.svg';
+import arrowForwardIcon from 'public/arrow-forward-icon.svg';
 import { useController } from './zemoga-page.controller';
 
 function ZemogaPageTemplate(props) {

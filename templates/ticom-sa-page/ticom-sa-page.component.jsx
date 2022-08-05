@@ -4,7 +4,7 @@ import classes from 'classnames';
 
 import Head from 'atoms/head';
 import Header from 'atoms/header';
-import arrowBackIcon from 'public/arrow-back-outline.svg';
+import arrowBackIcon from 'public/arrow-back-icon.svg';
 import { useController } from './ticom-sa-page.controller';
 
 function TicomSaPageTemplate(props) {
