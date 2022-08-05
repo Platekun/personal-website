@@ -1,5 +1,6 @@
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
+import classes from 'classnames';
 
 import { Window, WindowTitleBar } from '../window';
 import lockedIcon from 'public/lock-icon.svg';
@@ -48,7 +49,12 @@ function DocumentWindow(props) {
       </WindowTitleBar>
 
       <div
-        className="p-6 pb-14 flex flex-col gap-6 text-xl h-full overflow-scroll"
+        className={classes(
+          'p-6 pb-14 flex flex-col gap-6 text-xl h-full overflow-scroll',
+          {
+            'pointer-events-none': !data.isActive,
+          }
+        )}
         contentEditable={computed.isEditing ? 'true' : 'false'}
         suppressContentEditableWarning={true}
       >
