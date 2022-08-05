@@ -39,6 +39,7 @@ function Window(props) {
         value={{
           isIdle: computed.isIdle,
           isDragging: computed.isDragging,
+          isActive: data.isActive,
           onWindowDragged: handlers.dragWindow,
           onWindowClosed: handlers.closeWindow,
         }}

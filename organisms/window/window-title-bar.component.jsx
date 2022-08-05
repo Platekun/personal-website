@@ -7,7 +7,8 @@ import { useWindow } from './window.component';
 function WindowTitleBar(props) {
   const { title, children } = props;
 
-  const { isIdle, isDragging, onWindowDragged, onWindowClosed } = useWindow();
+  const { isIdle, isDragging, isActive, onWindowDragged, onWindowClosed } =
+    useWindow();
 
   return (
     <header
@@ -16,12 +17,18 @@ function WindowTitleBar(props) {
         {
           'cursor-grab': isIdle,
           'cursor-grabbing': isDragging,
+          'cursor-pointer': !isActive,
         }
       )}
       onMouseDown={onWindowDragged}
     >
       <div className="absolute left-2">
-        <button className="pt-2 p-1 select-none" onClick={onWindowClosed}>
+        <button
+          className={classes('pt-2 p-1 select-none', {
+            'pointer-events-none': !isActive,
+          })}
+          onClick={onWindowClosed}
+        >
           <Image
             src={closeIcon}
             alt={`Close button for ${title}.`}

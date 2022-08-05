@@ -25,7 +25,12 @@ function DocumentWindow(props) {
       <WindowTitleBar title={data.title}>
         <div className="absolute right-2">
           {!computed.isEditing ? (
-            <button className="pt-2 p-1" onClick={handlers.toggleEdition}>
+            <button
+              className={classes('pt-2 p-1', {
+                'pointer-events-none': !data.isActive,
+              })}
+              onClick={handlers.toggleEdition}
+            >
               <Image
                 src={lockedIcon}
                 alt={`Enable selection for ${data.title}.`}
@@ -35,7 +40,12 @@ function DocumentWindow(props) {
               />
             </button>
           ) : (
-            <button className="pt-2 p-1" onClick={handlers.toggleEdition}>
+            <button
+              className={classes('pt-2 p-1', {
+                'pointer-events-none': !data.isActive,
+              })}
+              onClick={handlers.toggleEdition}
+            >
               <Image
                 src={unlockedIcon}
                 alt={`Disable selection for ${data.title}.`}
