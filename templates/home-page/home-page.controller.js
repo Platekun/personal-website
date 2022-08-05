@@ -47,7 +47,7 @@ function OperativeSystemMachine(desktop) {
           },
           on: {
             PROCCESS_INITIALIZATION_REQUESTED: {
-              actions: ['initializeProccess'],
+              actions: ['initializeProccessOrFocusExistingProccess'],
             },
             PROCCESS_ACTIVATED: {
               actions: ['updateWindowsStack'],
@@ -64,17 +64,17 @@ function OperativeSystemMachine(desktop) {
     },
     {
       actions: {
-        initializeProccess: assign({
+        initializeProccessOrFocusExistingProccess: assign({
           processes: (context, event) => {
             const {
               payload: { fileId },
             } = event;
 
-            const isThereAProccessWithTheSameFileRunning = Object.values(
-              context.processes
-            ).find((proccessValue) => proccessValue.fileId === fileId);
+            const existingProccess = Object.values(context.processes).find(
+              (proccessValue) => proccessValue.fileId === fileId
+            );
 
-            if (isThereAProccessWithTheSameFileRunning) {
+            if (existingProccess) {
               return context.processes;
             }
 
@@ -104,6 +104,30 @@ function OperativeSystemMachine(desktop) {
                 reference,
               },
             };
+          },
+          windowsStack: (context, event) => {
+            const { windowsStack } = context;
+            const {
+              payload: { fileId },
+            } = event;
+
+            const existingProccessEntry = Object.entries(
+              context.processes
+            ).find(([, proccessValue]) => proccessValue.fileId === fileId);
+
+            if (!existingProccessEntry) {
+              return context.windowsStack;
+            }
+
+            const existingProccessEntryId = existingProccessEntry[0];
+
+            return [
+              existingProccessEntryId,
+              ...windowsStack.filter(
+                (currentProccessId) =>
+                  currentProccessId !== existingProccessEntryId
+              ),
+            ];
           },
         }),
         updateWindowsStack: assign({
