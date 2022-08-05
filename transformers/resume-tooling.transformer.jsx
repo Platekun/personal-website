@@ -13,18 +13,28 @@ function createToolingContent(tooling) {
       </h2>
 
       {tooling.map((tool) => (
-        <p className={classes('text-xl text-inconsolata', 'sm:text-2xl')}>
+        <p
+          className={classes(
+            'text-base text-noto-sans',
+            'sm:text-xl',
+            'lg:text-2xl'
+          )}
+        >
           <span className="text-white">*</span>{' '}
           <a
             key={tool.name}
             href={tool.source}
             target="_blank"
-            className="text-[#0AC9EE] sm:text-2xl"
+            className={classes(
+              'text-[#0AC9EE] text-base',
+              'sm:text-xl',
+              'lg:text-2xl'
+            )}
             style={{ textDecoration: 'underline' }}
           >
             {tool.name}
           </a>
-          : <span className="text-white">{tool.description}</span>
+          <span className="text-white">: {tool.description}</span>
         </p>
       ))}
     </>

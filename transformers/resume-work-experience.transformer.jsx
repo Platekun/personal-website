@@ -29,18 +29,29 @@ function createExperienceContent(workExperience) {
       </h2>
       <p
         className={classes(
-          'text-xl text-inconsolata text-white',
-          'sm:text-2xl'
+          'text-base text-noto-sans text-white',
+          'sm:text-xl',
+          'lg:text-2xl'
         )}
       >
         Company Name: {workExperience.employer}.
       </p>
-      <p className={classes('text-xl text-inconsolata ', 'sm:text-2xl')}>
+      <p
+        className={classes(
+          'text-base text-noto-sans',
+          'sm:text-xl',
+          'lg:text-2xl'
+        )}
+      >
         <span className="text-white">Company URL: </span>
         <a
           href={workExperience.employerUrl}
           target="_blank"
-          className="text-xl text-inconsolata text-[#0AC9EE] sm:text-2xl"
+          className={classes(
+            'text-base text-noto-sans text-[#0AC9EE]',
+            'sm:text-xl',
+            'lg:text-2xl'
+          )}
           style={{ textDecoration: 'underline' }}
         >
           {workExperience.employerUrl}
@@ -48,15 +59,16 @@ function createExperienceContent(workExperience) {
       </p>
       <p
         className={classes(
-          'text-xl text-inconsolata text-white',
-          'sm:text-2xl'
+          'text-base text-noto-sans text-white',
+          'sm:text-xl',
+          'lg:text-2xl'
         )}
       >
         Employment period: {MonthNamesMap[workExperience.from.month]}{' '}
         {workExperience.from.year} - {MonthNamesMap[workExperience.to.month]}{' '}
         {workExperience.to.year}.
       </p>
-      <ul className="flex flex-row justify-center flex-wrap gap-4">
+      <ul className={classes('flex flex-row justify-center flex-wrap gap-4')}>
         {workExperience.images.map((img) => (
           <li key={img.source}>
             <a href={img.source} target="_blank">
@@ -83,19 +95,20 @@ function createExperienceContent(workExperience) {
             </a>
           </li>
         ))}
-
-        {workExperience.description.map((line) => (
-          <p
-            key={line}
-            className={classes(
-              'text-xl w-full align-left text-inconsolata text-white',
-              'sm:text-2xl'
-            )}
-          >
-            {line}
-          </p>
-        ))}
       </ul>
+
+      {workExperience.description.map((line) => (
+        <p
+          key={line}
+          className={classes(
+            'text-base w-full align-left text-noto-sans text-white',
+            'sm:text-xl',
+            'lg:text-2xl'
+          )}
+        >
+          {line}
+        </p>
+      ))}
     </>
   );
 }

@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import Image from 'next/image';
 import classes from 'classnames';
 import Link from 'next/link';
+import { useButton } from 'react-aria';
 
 import documentIcon from 'public/file-icon.svg';
 import directoryIcon from 'public/directory-icon.svg';
@@ -20,6 +21,7 @@ function FileIconButton(props) {
   } = props;
 
   const reference = useRef(null);
+  const { buttonProps } = useButton({ onKeyDown: onKeyPress }, reference);
 
   useCssAnimationCleanup(reference, [
     'opacity-0',
@@ -28,7 +30,7 @@ function FileIconButton(props) {
   ]);
 
   const iconElementClasses = classes(
-    'w-full flex flex-col justify-center items-center p-1 pt-3 rounded-sm select-none transition  hover:bg-sky-700 focus:bg-sky-800 active:bg-[#0AC9EE]',
+    'w-full flex flex-col justify-center items-center p-1 pt-3 rounded-sm select-none transition hover:bg-sky-700 focus:bg-sky-800 active:bg-[#0AC9EE]',
     {
       'animate-fade-in opacity-0 pointer-events-none': animate,
     }
@@ -60,14 +62,13 @@ function FileIconButton(props) {
         <Image
           src={source}
           alt={`${filename} ${variant} icon`}
-          title={`Open this ${variant} by double clicking or by focussing and pressing Enter.`}
           height={67}
           width={67}
         />
         <h3 className="mt-2">
           <span
             className={classes(
-              'text-md text-white text-center text-inconsolata text-xs',
+              'text-md text-white text-center text-noto-sans text-xs',
               'sm:text-base'
             )}
           >
@@ -81,21 +82,21 @@ function FileIconButton(props) {
       ref={reference}
       className={iconElementClasses}
       data-file-id={fileId}
+      title={`Open this ${variant} by double clicking or by focussing and pressing ↵ (Return).`}
       onDoubleClick={onDoubleClick}
-      onKeyPress={onKeyPress}
       style={iconElementStyles}
+      {...buttonProps}
     >
       <Image
         src={source}
         alt={`${filename} ${variant} icon`}
-        title={`Open this ${variant} by double clicking or by focussing and pressing Enter.`}
         height={67}
         width={67}
       />
       <h3 className="mt-2">
         <span
           className={classes(
-            'text-md text-white text-center text-inconsolata text-xs',
+            'text-md text-white text-center text-noto-sans text-xs',
             'sm:text-base'
           )}
         >

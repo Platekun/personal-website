@@ -16,8 +16,9 @@ function createFunctionsContent(functions) {
           <li key={func.description}>
             <p
               className={classes(
-                'text-xl text-inconsolata text-white',
-                'sm:text-2xl'
+                'text-base text-noto-sans text-white',
+                'sm:text-xl',
+                'lg:text-2xl'
               )}
             >
               * {func.description}

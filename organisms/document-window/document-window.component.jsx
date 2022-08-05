@@ -2,8 +2,9 @@ import { createPortal } from 'react-dom';
 import Image from 'next/image';
 
 import { Window, WindowTitleBar } from '../window';
-import editIcon from 'public/edit-icon.svg';
-import saveIcon from 'public/save-icon.svg';
+import lockedIcon from 'public/lock-icon.svg';
+import unlockedIcon from 'public/unlock-icon.svg';
+
 import { useController } from './document-window.controller';
 
 function DocumentWindow(props) {
@@ -21,23 +22,23 @@ function DocumentWindow(props) {
       <WindowTitleBar title={data.title}>
         <div className="absolute right-2">
           {!computed.isEditing ? (
-            <button className="p-1" onClick={handlers.toggleEdition}>
+            <button className="pt-2 p-1" onClick={handlers.toggleEdition}>
               <Image
-                src={editIcon}
-                alt={`Enable edition button for ${data.title}.`}
-                title="Enable the edition mode of this document by clicking on this button."
-                height={12}
-                width={12}
+                src={lockedIcon}
+                alt={`Enable selection for ${data.title}.`}
+                title="Enable selection for this document by clicking on this button."
+                height={24}
+                width={24}
               />
             </button>
           ) : (
-            <button className="p-1" onClick={handlers.toggleEdition}>
+            <button className="pt-2 p-1" onClick={handlers.toggleEdition}>
               <Image
-                src={saveIcon}
-                alt={`Disable edition button for ${data.title}.`}
-                title="Disable the edition mode of this document by clicking on this button."
-                height={12}
-                width={12}
+                src={unlockedIcon}
+                alt={`Disable selection for ${data.title}.`}
+                title="Disable selection for this document by clicking on this button."
+                height={24}
+                width={24}
               />
             </button>
           )}

@@ -1,8 +1,10 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import classes from 'classnames';
 
 import Head from 'atoms/head';
 import Header from 'atoms/header';
+import arrowBackIcon from 'public/arrow-back-outline.svg';
 import { useController } from './ticom-sa-page.controller';
 
 function TicomSaPageTemplate(props) {
@@ -15,23 +17,38 @@ function TicomSaPageTemplate(props) {
         description="This is Carlos Camilo Lobo's work experience while working for TICOM S.A"
       />
 
-      <main
+      <div
         className={classes(
           'flex flex-col items-center h-screen w-auto max-w-7xl mx-auto'
         )}
       >
         <Header />
 
-        <div className={classes('w-full flex flex-col gap-6 p-4', 'sm:px-8')}>
+        <main className={classes('w-full flex flex-col gap-6 p-4', 'sm:px-8')}>
           {computed.content}
+        </main>
 
+        <footer
+          className={classes(
+            'w-full flex pb-5 pl-5 pr-5 mt-8',
+            'sm:mt-16',
+            'lg:mt-24'
+          )}
+        >
           <Link href="/experience/nativapps.md">
-            <a className={classes('text-white text-left text-bitwise')}>
-              ⬅️ Recent
+            <a
+              className={classes(
+                'relative flex justify-center text-[#0AC9EE] text-right text-bitwise text-base',
+                'sm:text-xl',
+                'lg:text-2xl'
+              )}
+            >
+              <Image src={arrowBackIcon} width={24} height={24} />
+              <span className="mr-1 underline">Recent</span>
             </a>
           </Link>
-        </div>
-      </main>
+        </footer>
+      </div>
     </>
   );
 }

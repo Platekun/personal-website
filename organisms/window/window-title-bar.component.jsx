@@ -21,13 +21,13 @@ function WindowTitleBar(props) {
       onMouseDown={onWindowDragged}
     >
       <div className="absolute left-2">
-        <button className="p-1 select-none" onClick={onWindowClosed}>
+        <button className="pt-2 p-1 select-none" onClick={onWindowClosed}>
           <Image
             src={closeIcon}
             alt={`Close button for ${title}.`}
             title="Close this window by clicking on this button."
-            height={12}
-            width={12}
+            height={16}
+            width={16}
           />
         </button>
       </div>

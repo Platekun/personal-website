@@ -14,7 +14,13 @@ function createSocialMediaContent(socialMedia) {
       <ul className="flex flex-col gap-4">
         {Object.entries(socialMedia).map(([name, url]) => (
           <li key={url}>
-            <p className={classes('text-xl text-inconsolata', 'sm:text-2xl')}>
+            <p
+              className={classes(
+                'text-base text-noto-sans',
+                'sm:text-xl',
+                'lg:text-2xl'
+              )}
+            >
               <span className="text-white">* {name}: </span>
               <a
                 href={url}
