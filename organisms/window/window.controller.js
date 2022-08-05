@@ -2,9 +2,9 @@ import { useEffect, useMemo, useRef } from 'react';
 import { assign, createMachine } from 'xstate';
 import { useMachine } from '@xstate/react';
 
-import { useBodyReference } from 'hooks/useBodyReference.hook';
 import { useCssAnimationCleanup } from 'hooks/useCssAnimationCleanup.hook';
 import { createWindowId } from 'utils/createWindowId';
+import { usePageProps } from 'hooks/usePageProps.hook';
 
 function WindowMachine(options) {
   const { windowId, onSelected, onClosed } = options;
@@ -156,7 +156,7 @@ function useController(props) {
     context: { delta, anchor },
   } = state;
 
-  const bodyReference = useBodyReference();
+  const { bodyReference } = usePageProps();
 
   const isIdle = state.matches('idle');
 

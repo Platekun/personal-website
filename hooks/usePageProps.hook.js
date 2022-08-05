@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react';
+import { useBodyReference } from './useBodyReference.hook';
 
 import { useIsMobile } from './useIsMobile';
 
@@ -14,12 +15,14 @@ function PageProvider(pageProps) {
   const { ssr, ssrIsMobile, children } = pageProps;
 
   const isMobile = useIsMobile(ssrIsMobile);
+  const bodyReference = useBodyReference();
 
   return (
     <Provider
       value={{
         ssr,
         isMobile,
+        bodyReference,
       }}
     >
       {children}
