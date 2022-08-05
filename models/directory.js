@@ -20,6 +20,10 @@ class Directory {
     }
   }
 
+  setWindowCoordinates(value) {
+    this.initialWindowCoordinates = value;
+  }
+
   search(id) {
     if (this.id === id) {
       return this;

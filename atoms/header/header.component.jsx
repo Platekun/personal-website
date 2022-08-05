@@ -18,7 +18,7 @@ function Header(props) {
         'w-full p-4',
         'sm:px-8 sm:h-20 sm:flex sm:items-center sm:justify-start',
         {
-          'opacity-0 animate-fade-in-downwards': animate,
+          'opacity-0 animate-fade-in': animate,
         }
       )}
       style={{

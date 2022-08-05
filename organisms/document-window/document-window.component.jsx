@@ -14,6 +14,7 @@ function DocumentWindow(props) {
     <Window
       proccessId={data.processId}
       dimensions={data.dimensions}
+      coordinates={data.coordinates}
       order={data.order}
       isActive={data.isActive}
       onSelected={handlers.selectWindow}

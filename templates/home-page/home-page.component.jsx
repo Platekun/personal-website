@@ -47,7 +47,7 @@ function HomePageTemplate(props) {
               className={classes(
                 'flex flex-col items-center h-full justify-between gap-8',
                 {
-                  'opacity-0 animate-fade-in-downwards': !computed.isMobile,
+                  'opacity-0 animate-fade-in': !computed.isMobile,
                 }
               )}
               style={

@@ -1,13 +1,13 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { timeline } from 'motion';
+import { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import { assign, createMachine } from 'xstate';
 import { useMachine } from '@xstate/react';
 
-import { useCssAnimationCleanup } from 'hooks/useCssAnimationCleanup.hook';
 import { createWindowId } from 'utils/createWindowId';
 import { usePageProps } from 'hooks/usePageProps.hook';
 
 function WindowMachine(options) {
-  const { windowId, onSelected, onClosed } = options;
+  const { windowId, coordinates, onSelected, onClosed } = options;
 
   return createMachine(
     {
@@ -19,8 +19,8 @@ function WindowMachine(options) {
           dy: 0,
         },
         anchor: {
-          x: 0,
-          y: 0,
+          x: coordinates.x,
+          y: coordinates.y,
         },
         pointer: {
           x: 0,
@@ -29,9 +29,11 @@ function WindowMachine(options) {
       },
       states: {
         setup: {
-          always: {
-            target: 'idle',
-            actions: ['notifySelection'],
+          after: {
+            4: {
+              target: 'idle',
+              actions: ['notifySelection'],
+            },
           },
         },
         idle: {
@@ -127,6 +129,7 @@ function useController(props) {
   const {
     proccessId,
     dimensions,
+    coordinates,
     order,
     isActive,
     onSelected,
@@ -136,20 +139,18 @@ function useController(props) {
 
   const sectionReference = useRef(null);
 
-  useCssAnimationCleanup(sectionReference, [
-    'animate-pop-and-fade',
-    'opacity-0',
-  ]);
-
   const windowId = createWindowId(proccessId);
 
-  const windowMachine = useMemo(function computeWindowMachine() {
-    return WindowMachine({
-      windowId,
-      onSelected,
-      onClosed,
-    });
-  }, []);
+  const windowMachine = useMemo(
+    () =>
+      WindowMachine({
+        windowId,
+        coordinates,
+        onSelected,
+        onClosed,
+      }),
+    []
+  );
 
   const [state, send] = useMachine(windowMachine);
 
@@ -158,6 +159,8 @@ function useController(props) {
   } = state;
 
   const { bodyReference } = usePageProps();
+
+  const isSetup = state.matches('setup');
 
   const isIdle = state.matches('idle');
 
@@ -185,42 +188,60 @@ function useController(props) {
     });
   };
 
-  useEffect(
-    function attachMouseListenersToBody() {
-      if (bodyReference === null) {
+  // Note: Usually one would perform a Tailwind transition for this cases but my problem was that the Tailwind transition used `transform` as well as my initial coordinates which created a bizzare effect.
+  // I could not find a proper way to display the transition effect using Tailwind because the values I was using used dynamic values from the window (window and height).
+  useEffect(() => {
+    if (sectionReference.current === null) {
+      return;
+    }
+
+    timeline([
+      [
+        sectionReference.current,
+        { scale: 0, opacity: 0, x: coordinates.x, y: coordinates.y },
+        { duration: 0.15 },
+      ],
+      [
+        sectionReference.current,
+        { scale: 1, opacity: 1, x: coordinates.x, y: coordinates.y },
+        { duration: 0.15 },
+      ],
+    ]);
+  }, [sectionReference]);
+
+  useEffect(() => {
+    if (bodyReference === null) {
+      return;
+    }
+
+    const handleMouseMove = (event) => {
+      if (!isDragging) {
         return;
       }
 
-      const handleMouseMove = (event) => {
-        if (!isDragging) {
-          return;
-        }
+      send({
+        type: 'POSITION_UPDATED',
+        payload: {
+          clientX: event.clientX,
+          clientY: event.clientY,
+        },
+      });
+    };
 
-        send({
-          type: 'POSITION_UPDATED',
-          payload: {
-            clientX: event.clientX,
-            clientY: event.clientY,
-          },
-        });
-      };
+    const handleMouseUp = () => {
+      send({
+        type: 'WINDOW_RELEASED',
+      });
+    };
 
-      const handleMouseUp = () => {
-        send({
-          type: 'WINDOW_RELEASED',
-        });
-      };
+    bodyReference.current.addEventListener('mousemove', handleMouseMove);
+    bodyReference.current.addEventListener('mouseup', handleMouseUp);
 
-      bodyReference.current.addEventListener('mousemove', handleMouseMove);
-      bodyReference.current.addEventListener('mouseup', handleMouseUp);
-
-      return () => {
-        bodyReference.current.removeEventListener('mousemove', handleMouseMove);
-        bodyReference.current.removeEventListener('mouseup', handleMouseUp);
-      };
-    },
-    [bodyReference, isDragging]
-  );
+    return () => {
+      bodyReference.current.removeEventListener('mousemove', handleMouseMove);
+      bodyReference.current.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [bodyReference, isDragging]);
 
   return {
     refs: {
@@ -228,6 +249,7 @@ function useController(props) {
     },
     data: {
       dimensions,
+      coordinates,
       delta,
       anchor,
       order,
@@ -235,6 +257,7 @@ function useController(props) {
       isSelectionEnabled,
     },
     computed: {
+      isSetup,
       isIdle,
       isDragging,
       windowId,

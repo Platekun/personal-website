@@ -16,6 +16,7 @@ function DirectoryProccessMachine(options) {
         title: directory.name,
         contents: directory.contents,
         dimensions: directory.initialWindowDimensions,
+        coordinates: directory.initialWindowCoordinates,
       },
       states: {
         setup: {
@@ -80,7 +81,13 @@ function useController(props) {
   const [state, send] = useActor(process);
 
   const {
-    context: { processId, title, contents: directoryContents, dimensions },
+    context: {
+      processId,
+      title,
+      contents: directoryContents,
+      dimensions,
+      coordinates,
+    },
   } = state;
 
   const { openFileWithMouse, openFileWithKeyboard } = useOpenFile({
@@ -125,6 +132,7 @@ function useController(props) {
       processId,
       title,
       order,
+      coordinates,
       isActive,
       dimensions,
     },

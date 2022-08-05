@@ -11,6 +11,10 @@ class File {
     this.initialWindowDimensions = initialWindowDimensions;
   }
 
+  setWindowCoordinates(value) {
+    this.initialWindowCoordinates = value;
+  }
+
   get name() {
     return `${this.nameWithoutExtension}.${this.extension}`;
   }

@@ -14,6 +14,7 @@ function DocumentProccessMachine(options) {
         content: document.content,
         editing: false,
         dimensions: document.initialWindowDimensions,
+        coordinates: document.initialWindowCoordinates,
       },
       states: {
         setup: {
@@ -73,7 +74,7 @@ function useController(props) {
   const [state, send] = useActor(process);
 
   const {
-    context: { processId, title, content, editing, dimensions },
+    context: { processId, title, content, editing, dimensions, coordinates },
   } = state;
 
   const selectWindow = () => {
@@ -103,6 +104,7 @@ function useController(props) {
       order,
       isActive,
       dimensions,
+      coordinates,
     },
     computed: {
       isEditing: editing,

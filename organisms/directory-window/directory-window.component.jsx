@@ -13,6 +13,7 @@ function DirectoryWindow(props) {
       proccessId={data.processId}
       dimensions={data.dimensions}
       order={data.order}
+      coordinates={data.coordinates}
       isActive={data.isActive}
       onSelected={handlers.selectWindow}
       onClosed={handlers.terminateProccess}

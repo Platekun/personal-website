@@ -16,6 +16,25 @@ import { createFunctionsContent } from 'transformers/resume-functions.transforme
 import { createToolingContent } from 'transformers/resume-tooling.transformer';
 import { createSocialMediaContent } from 'transformers/resume-social-media.transformer';
 
+function computeWindowCoordinates() {
+  // TODO: One could ellaborate a proper method to compute a random (x, y) taking into account the dimensions of each file's window.
+
+  const width =
+    window.innerWidth ||
+    document.documentElement.clientWidth ||
+    document.body.clientWidth;
+
+  const height =
+    window.innerHeight ||
+    document.documentElement.clientHeight ||
+    document.body.clientHeight;
+
+  return {
+    x: width / 3,
+    y: height / 5,
+  };
+}
+
 function OperativeSystemMachine(desktop) {
   return createMachine(
     {
@@ -81,6 +100,8 @@ function OperativeSystemMachine(desktop) {
             const processId = uuid();
 
             const searchResult = desktop.search(fileId);
+
+            searchResult.setWindowCoordinates(computeWindowCoordinates());
 
             const isDirectory = searchResult instanceof Directory;
 

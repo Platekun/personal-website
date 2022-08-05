@@ -18,14 +18,13 @@ function Window(props) {
       ref={refs.sectionReference}
       id={computed.windowId}
       className={classes(
-        'resize overflow-hidden absolute rounded-sm bg-[#091432] opacity-90 border-4 rounded-tr-3xl rounded-bl-3xl border-[#0AC9EE] border-double max-w-100',
-        'opacity-0 animate-pop-and-fade',
+        'resize overflow-hidden absolute rounded-sm bg-[#091432] opacity-0 border-4 rounded-tr-3xl rounded-bl-3xl border-[#0AC9EE] border-double max-w-100',
         {
           'select-none': !data.isSelectionEnabled ? 'false' : 'true',
         }
       )}
       style={{
-        position: 'absolute',
+        // To avoid jumping between different coordinates, the `setup` phase uses the final coordinates of the animation.
         transform: `translate(calc(${
           data.anchor.x + data.delta.dx
         } * 1px), calc(${data.anchor.y + data.delta.dy} * 1px))`,
@@ -34,7 +33,6 @@ function Window(props) {
         zIndex: data.order,
         filter: data.isActive ? 'brightness(1)' : 'brightness(0.5)',
       }}
-      data-windowsStackIndex={data.windowsStackIndex}
       onMouseDown={handlers.selectWindow}
     >
       <WindowContext.Provider
