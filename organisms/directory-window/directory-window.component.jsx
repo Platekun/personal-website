@@ -22,9 +22,12 @@ function DirectoryWindow(props) {
       <WindowTitleBar title={data.title} />
 
       <ul
-        className={classes('p-4 flex flex-row flex-wrap gap-4', {
-          'pointer-events-none': !data.isActive,
-        })}
+        className={classes(
+          'p-4 flex flex-row flex-wrap gap-4 h-full overflow-scroll',
+          {
+            'pointer-events-none': !data.isActive,
+          }
+        )}
       >
         {computed.contents.map((fileOrDirectory, index) => (
           <li
