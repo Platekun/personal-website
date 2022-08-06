@@ -49,3 +49,7 @@
 body {
   background-color: #091432;
 }
+
+.text-shadow {
+  text-shadow: 0 0 0.25rem #091432;
+}
