@@ -96,7 +96,7 @@ function FileIconButton(props) {
       <h3 className="mt-2">
         <span
           className={classes(
-            'text-md text-white text-center text-noto-sans text-xs',
+            'text-md text-white text-center text-shadow text-noto-sans text-xs',
             'sm:text-base'
           )}
         >
