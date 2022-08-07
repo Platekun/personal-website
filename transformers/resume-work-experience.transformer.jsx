@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import classes from 'classnames';
 
-const MonthNamesMap = {
+const MonthNames = {
   1: 'January',
   2: 'February',
   3: 'March',
@@ -67,9 +67,9 @@ function transformWorkExperienceToContent(options) {
         )}
       >
         Employment period:{' '}
-        {MonthNamesMap[workExperienceCollectionItem.content.from.month]}{' '}
+        {MonthNames[workExperienceCollectionItem.content.from.month]}{' '}
         {workExperienceCollectionItem.content.from.year} -{' '}
-        {MonthNamesMap[workExperienceCollectionItem.content.to.month]}{' '}
+        {MonthNames[workExperienceCollectionItem.content.to.month]}{' '}
         {workExperienceCollectionItem.content.to.year}.
       </p>
       <ul className={classes('flex flex-row justify-center flex-wrap gap-4')}>
