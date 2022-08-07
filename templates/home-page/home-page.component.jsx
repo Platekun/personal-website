@@ -24,7 +24,7 @@ function HomePageTemplate(props) {
 
       <main
         className={classes(
-          'flex flex-col items-center h-screen bg-[url("https://lobito-personal-page.s3.amazonaws.com/wolf-bg.jpg")] bg-center bg-cover',
+          'flex flex-col items-center h-screen bg-home2 bg-center bg-cover',
           'sm:overflow-hidden'
         )}
       >

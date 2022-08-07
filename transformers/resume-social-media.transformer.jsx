@@ -1,6 +1,6 @@
 import classes from 'classnames';
 
-function createSocialMediaContent(socialMedia) {
+function transformSocialMediaToContent(socialMediaCollection) {
   return (
     <>
       <h2
@@ -12,8 +12,8 @@ function createSocialMediaContent(socialMedia) {
         Social Media
       </h2>
       <ul className="flex flex-col gap-4">
-        {Object.entries(socialMedia).map(([name, url]) => (
-          <li key={url}>
+        {socialMediaCollection.collection.map((socialMediaCollectionItem) => (
+          <li key={socialMediaCollectionItem.id}>
             <p
               className={classes(
                 'text-base text-noto-sans',
@@ -21,14 +21,16 @@ function createSocialMediaContent(socialMedia) {
                 'lg:text-2xl'
               )}
             >
-              <span className="text-white">* {name}: </span>
+              <span className="text-white">
+                * {socialMediaCollectionItem.content.name}:{' '}
+              </span>
               <a
-                href={url}
+                href={socialMediaCollectionItem.content.socialMediaUrl}
                 target="_blank"
                 className="text-[#0AC9EE] sm:text-2xl"
                 style={{ textDecoration: 'underline' }}
               >
-                {url}
+                {socialMediaCollectionItem.content.socialMediaUrl}
               </a>
             </p>
           </li>
@@ -38,4 +40,4 @@ function createSocialMediaContent(socialMedia) {
   );
 }
 
-export { createSocialMediaContent };
+export { transformSocialMediaToContent };

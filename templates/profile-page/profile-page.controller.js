@@ -1,9 +1,12 @@
 import { useMobileOnlyGuard } from 'hooks/useMobileOnlyGuard.hook';
 import { useTransformer } from 'hooks/useTransformer.hook';
-import { createProfileContent } from 'transformers/resume-profile.transformer';
+import { transformProfileToContent } from 'transformers/resume-profile.transformer';
 
 function useController(props) {
-  const content = useTransformer(props.profile, createProfileContent);
+  const content = useTransformer(
+    props.profileRecord,
+    transformProfileToContent
+  );
 
   useMobileOnlyGuard();
 

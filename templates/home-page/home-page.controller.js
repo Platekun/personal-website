@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useMachine } from '@xstate/react';
 import { assign, createMachine, spawn } from 'xstate';
 import { v4 as uuid } from 'uuid';
@@ -10,11 +11,31 @@ import { DirectoryProccessMachine } from 'organisms/directory-window/directory-w
 import { DocumentProccessMachine } from 'organisms/document-window/document-window.controller';
 import { File } from 'models/file.model';
 import { Directory } from 'models/directory.model';
-import { createProfileContent } from 'transformers/resume-profile.transformer';
-import { createExperienceContent } from 'transformers/resume-work-experience.transformer';
-import { createFunctionsContent } from 'transformers/resume-functions.transformer';
-import { createToolingContent } from 'transformers/resume-tooling.transformer';
-import { createSocialMediaContent } from 'transformers/resume-social-media.transformer';
+import { transformProfileToContent } from 'transformers/resume-profile.transformer';
+import { transformWorkExperienceToContent } from 'transformers/resume-work-experience.transformer';
+import { transformRoleFunctionsToContent } from 'transformers/resume-functions.transformer';
+import { transformToolingToContent } from 'transformers/resume-tooling.transformer';
+import { transformSocialMediaToContent } from 'transformers/resume-social-media.transformer';
+import { useIsMobile } from 'hooks/useIsMobile';
+
+// TODO: Remove once dynamic `import`(s) can handle dynamic path(s).
+const workExperiencesImageLoaders = {
+  'ticom-erp.webp': () => import('../../public/ticom-erp.webp'),
+  'ticom-erp-1.webp': () => import('../../public/ticom-erp-1.webp'),
+  'ticom-erp-2.webp': () => import('../../public/ticom-erp-2.webp'),
+  'ticom-erp-3.webp': () => import('../../public/ticom-erp-3.webp'),
+  'be-girl-app-1.webp': () => import('../../public/be-girl-app-1.webp'),
+  'be-girl-app-2.webp': () => import('../../public/be-girl-app-2.webp'),
+  'luna-intake-form-first-part.webp': () =>
+    import('../../public/luna-intake-form-first-part.webp'),
+  'luna-care-credentialing-form.webp': () =>
+    import('../../public/luna-care-credentialing-form.webp'),
+  'luna-dashboard.webp': () => import('../../public/luna-dashboard.webp'),
+  'sony-competition-center.webp': () =>
+    import('../../public/sony-competition-center.webp'),
+  'sony-competition-center-colombia.webp': () =>
+    import('../../public/sony-competition-center-colombia.webp'),
+};
 
 function OperativeSystemMachine(desktop) {
   return createMachine(
@@ -46,6 +67,9 @@ function OperativeSystemMachine(desktop) {
             },
           },
           on: {
+            EXPERIENCE_DIRECTORY_CONTENTS_REQUESTED: {
+              actions: ['fetchDirectoryContents'],
+            },
             PROCCESS_INITIALIZATION_REQUESTED: {
               actions: ['initializeProccessOrFocusExistingProccess'],
             },
@@ -64,6 +88,11 @@ function OperativeSystemMachine(desktop) {
     },
     {
       actions: {
+        fetchDirectoryContents: () => {
+          const experienceDirectory = desktop.contents[1];
+
+          experienceDirectory.contents.forEach((file) => file.fetchContent());
+        },
         initializeProccessOrFocusExistingProccess: assign({
           processes: (context, event) => {
             const {
@@ -178,8 +207,9 @@ function OperativeSystemMachine(desktop) {
 
 function transformPropsIntoModels(props) {
   const profileFile = new File('profile', {
+    id: props.profileRecord.id,
     extension: 'md',
-    content: createProfileContent(props.profile),
+    content: transformProfileToContent(props.profileRecord),
     initialWindowDimensions: {
       width: 800,
       height: 500,
@@ -187,16 +217,38 @@ function transformPropsIntoModels(props) {
   });
 
   const experienceDirectory = new Directory('experience', {
-    contents: props.experience.map((workExperience) => {
-      return new File(workExperience.employer, {
-        extension: 'md',
-        content: createExperienceContent(workExperience),
-        initialWindowDimensions: {
-          width: 800,
-          height: 500,
-        },
-      });
-    }),
+    id: props.workExperiencesCollection.id,
+    contents: props.workExperiencesCollection.collection.map(
+      (workExperienceCollectionItem) => {
+        return new File(workExperienceCollectionItem.content.employer, {
+          id: workExperienceCollectionItem.id,
+          extension: 'md',
+          async content() {
+            const imageModules = await Promise.all(
+              workExperienceCollectionItem.content.images.map(async (image) => {
+                const loadModule = workExperiencesImageLoaders[image.filename];
+
+                const module = await loadModule();
+
+                return {
+                  image: module.default,
+                  alt: image.alt,
+                };
+              })
+            );
+
+            return transformWorkExperienceToContent({
+              workExperienceCollectionItem,
+              imageModules,
+            });
+          },
+          initialWindowDimensions: {
+            width: 800,
+            height: 500,
+          },
+        });
+      }
+    ),
     initialWindowDimensions: {
       width: 600,
       height: 200,
@@ -204,8 +256,9 @@ function transformPropsIntoModels(props) {
   });
 
   const functionsFile = new File('functions', {
+    id: props.functionsCollection.id,
     extension: 'md',
-    content: createFunctionsContent(props.functions),
+    content: transformRoleFunctionsToContent(props.functionsCollection),
     initialWindowDimensions: {
       width: 600,
       height: 400,
@@ -213,8 +266,9 @@ function transformPropsIntoModels(props) {
   });
 
   const toolingFile = new File('tooling', {
+    id: props.toolingCollection.id,
     extension: 'md',
-    content: createToolingContent(props.tooling),
+    content: transformToolingToContent(props.toolingCollection),
     initialWindowDimensions: {
       width: 600,
       height: 400,
@@ -222,8 +276,9 @@ function transformPropsIntoModels(props) {
   });
 
   const socialMediaFile = new File('soc_media', {
+    id: props.socialMediaCollection.id,
     extension: 'md',
-    content: createSocialMediaContent(props.socialMedia),
+    content: transformSocialMediaToContent(props.socialMediaCollection),
     initialWindowDimensions: {
       width: 600,
       height: 300,
@@ -231,6 +286,7 @@ function transformPropsIntoModels(props) {
   });
 
   return new Directory('desktop', {
+    id: 'desktop',
     contents: [
       profileFile,
       experienceDirectory,
@@ -242,11 +298,11 @@ function transformPropsIntoModels(props) {
 }
 
 function useController(props) {
-  const { Resume } = props;
+  const { resume } = props;
 
   const { isMobile, breakpointHelpers } = usePageProps();
 
-  const desktop = useTransformer(Resume, transformPropsIntoModels);
+  const desktop = useTransformer(resume, transformPropsIntoModels);
   const operativeSystem = useTransformer(desktop, OperativeSystemMachine, []);
 
   const [state, send] = useMachine(operativeSystem);
@@ -299,6 +355,14 @@ function useController(props) {
   const [{ processId: topProccessId } = { processId: null }] = processes.sort(
     (a, b) => b.order - a.order
   );
+
+  if (typeof window !== 'undefined') {
+    useEffect(() => {
+      if (!isMobile) {
+        send({ type: 'EXPERIENCE_DIRECTORY_CONTENTS_REQUESTED' });
+      }
+    }, [isMobile]);
+  }
 
   return {
     refs: {},

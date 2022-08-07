@@ -1,6 +1,6 @@
 import classes from 'classnames';
 
-function createToolingContent(tooling) {
+function transformToolingToContent(toolingCollection) {
   return (
     <>
       <h2
@@ -12,8 +12,9 @@ function createToolingContent(tooling) {
         Toolset
       </h2>
 
-      {tooling.map((tool) => (
+      {toolingCollection.collection.map((toolingCollectionItem) => (
         <p
+          key={toolingCollectionItem.id}
           className={classes(
             'text-base text-noto-sans',
             'sm:text-xl',
@@ -22,8 +23,8 @@ function createToolingContent(tooling) {
         >
           <span className="text-white">*</span>{' '}
           <a
-            key={tool.name}
-            href={tool.source}
+            key={toolingCollectionItem.id}
+            href={toolingCollectionItem.source}
             target="_blank"
             className={classes(
               'text-[#0AC9EE] text-base',
@@ -32,13 +33,15 @@ function createToolingContent(tooling) {
             )}
             style={{ textDecoration: 'underline' }}
           >
-            {tool.name}
+            {toolingCollectionItem.content.name}
           </a>
-          <span className="text-white">: {tool.description}</span>
+          <span className="text-white">
+            : {toolingCollectionItem.content.description}
+          </span>
         </p>
       ))}
     </>
   );
 }
 
-export { createToolingContent };
+export { transformToolingToContent };

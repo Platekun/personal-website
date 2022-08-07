@@ -44,7 +44,12 @@ function NativAppsPageTemplate(props) {
                 'lg:text-2xl'
               )}
             >
-              <Image src={arrowBackIcon} width={24} height={24} />
+              <Image
+                src={arrowBackIcon}
+                alt="Navigate to my experience in Ideaware"
+                width={24}
+                height={24}
+              />
               <span className="ml-1 underline">Recent</span>
             </a>
           </Link>
@@ -58,7 +63,12 @@ function NativAppsPageTemplate(props) {
               )}
             >
               <span className="mr-1 underline">Older</span>
-              <Image src={arrowForwardIcon} width={24} height={24} />
+              <Image
+                src={arrowForwardIcon}
+                alt="Navigate to my experience in TICOM S.A"
+                width={24}
+                height={24}
+              />
             </a>
           </Link>
         </footer>

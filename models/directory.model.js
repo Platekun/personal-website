@@ -1,16 +1,10 @@
-import toBase64 from 'btoa';
-
 import { DisplayInformation } from './display-information.model';
 
 class Directory {
   constructor(name, options) {
-    const { contents, initialWindowDimensions } = options;
+    const { id, contents, initialWindowDimensions } = options;
 
-    this.id = toBase64(
-      `directory.${name}.${contents
-        .map((fileOrDirectory) => fileOrDirectory.id)
-        .join('+')}`
-    );
+    this.id = id;
     this.name = name;
     this.contents = contents;
 

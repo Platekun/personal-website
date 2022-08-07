@@ -49,7 +49,12 @@ function ZemogaPageTemplate(props) {
               )}
             >
               <span className="mr-1 underline">Older</span>
-              <Image src={arrowForwardIcon} width={24} height={24} />
+              <Image
+                src={arrowForwardIcon}
+                alt="Navigate to my experience in Ideaware"
+                width={24}
+                height={24}
+              />
             </a>
           </Link>
         </footer>

@@ -43,7 +43,12 @@ function TicomSaPageTemplate(props) {
                 'lg:text-2xl'
               )}
             >
-              <Image src={arrowBackIcon} width={24} height={24} />
+              <Image
+                src={arrowBackIcon}
+                alt="Navigate to my experience in NativApps"
+                width={24}
+                height={24}
+              />
               <span className="mr-1 underline">Recent</span>
             </a>
           </Link>

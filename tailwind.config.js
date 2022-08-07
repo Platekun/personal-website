@@ -8,6 +8,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        home2: "url('../public/wolf-background.webp')",
+      },
       keyframes: {
         fadeIn: {
           '0%': { opacity: 0 },

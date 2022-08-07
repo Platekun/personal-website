@@ -1,19 +1,42 @@
-import toBase64 from 'btoa';
-
 import { DisplayInformation } from './display-information.model';
 
 class File {
-  constructor(name, options) {
-    const { extension, content, initialWindowDimensions } = options;
+  isSettingUp = true;
+  isReady = false;
 
-    this.id = toBase64(`file.${name}.${extension}.${content}`);
+  constructor(name, options) {
+    const { id, extension, content, initialWindowDimensions } = options;
+
+    this.id = id;
     this.nameWithoutExtension = name;
     this.extension = extension;
-    this.content = content;
-    this.initialWindowDimensions = initialWindowDimensions;
+
+    if (typeof content === 'function') {
+      this.content = null;
+      this.fetchContentFn = content;
+    } else {
+      this.content = content;
+      this.fetchContentFn = null;
+    }
+
     this.displayInformation = new DisplayInformation({
       dimensions: initialWindowDimensions,
     });
+
+    if (typeof content !== 'function') {
+      this.isReady = true;
+      this.isSettingUp = false;
+    }
+  }
+
+  async fetchContent() {
+    if (!this.isSettingUp) {
+      return;
+    }
+
+    this.content = await this.fetchContentFn();
+    this.isSettingUp = false;
+    this.isReady = true;
   }
 
   get initialDimensions() {

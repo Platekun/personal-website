@@ -1,6 +1,6 @@
 import classes from 'classnames';
 
-function createFunctionsContent(functions) {
+function transformRoleFunctionsToContent(functionsCollection) {
   return (
     <>
       <h2
@@ -12,8 +12,8 @@ function createFunctionsContent(functions) {
         What I Do
       </h2>
       <ul className="flex flex-col gap-4">
-        {functions.map((func) => (
-          <li key={func.description}>
+        {functionsCollection.collection.map((functionsCollectionItem) => (
+          <li key={functionsCollectionItem.id}>
             <p
               className={classes(
                 'text-base text-noto-sans text-white',
@@ -21,7 +21,7 @@ function createFunctionsContent(functions) {
                 'lg:text-2xl'
               )}
             >
-              * {func.description}
+              * {functionsCollectionItem.content.description}
             </p>
           </li>
         ))}
@@ -30,4 +30,4 @@ function createFunctionsContent(functions) {
   );
 }
 
-export { createFunctionsContent };
+export { transformRoleFunctionsToContent };

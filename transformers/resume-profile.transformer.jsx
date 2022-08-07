@@ -1,6 +1,6 @@
 import classes from 'classnames';
 
-function createProfileContent(profile) {
+function transformProfileToContent(profileRecord) {
   return (
     <>
       <h2
@@ -11,7 +11,7 @@ function createProfileContent(profile) {
       >
         Professional Profile
       </h2>
-      {profile.map((line) => (
+      {profileRecord.content.map((line) => (
         <p
           key={line}
           className={classes(
@@ -27,4 +27,4 @@ function createProfileContent(profile) {
   );
 }
 
-export { createProfileContent };
+export { transformProfileToContent };

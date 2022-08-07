@@ -16,7 +16,9 @@ const MonthNamesMap = {
   12: 'December',
 };
 
-function createExperienceContent(workExperience) {
+function transformWorkExperienceToContent(options) {
+  const { workExperienceCollectionItem, imageModules } = options;
+
   return (
     <>
       <h2
@@ -25,7 +27,7 @@ function createExperienceContent(workExperience) {
           'sm:text-4xl'
         )}
       >
-        {workExperience.jobTitle.join(' / ')}
+        {workExperienceCollectionItem.content.jobTitle.join(' / ')}
       </h2>
       <p
         className={classes(
@@ -34,7 +36,7 @@ function createExperienceContent(workExperience) {
           'lg:text-2xl'
         )}
       >
-        Company Name: {workExperience.employer}.
+        Company Name: {workExperienceCollectionItem.content.employer}.
       </p>
       <p
         className={classes(
@@ -45,7 +47,7 @@ function createExperienceContent(workExperience) {
       >
         <span className="text-white">Company URL: </span>
         <a
-          href={workExperience.employerUrl}
+          href={workExperienceCollectionItem.content.employerUrl}
           target="_blank"
           className={classes(
             'text-base text-noto-sans text-[#0AC9EE]',
@@ -54,7 +56,7 @@ function createExperienceContent(workExperience) {
           )}
           style={{ textDecoration: 'underline' }}
         >
-          {workExperience.employerUrl}
+          {workExperienceCollectionItem.content.employerUrl}
         </a>
       </p>
       <p
@@ -64,14 +66,16 @@ function createExperienceContent(workExperience) {
           'lg:text-2xl'
         )}
       >
-        Employment period: {MonthNamesMap[workExperience.from.month]}{' '}
-        {workExperience.from.year} - {MonthNamesMap[workExperience.to.month]}{' '}
-        {workExperience.to.year}.
+        Employment period:{' '}
+        {MonthNamesMap[workExperienceCollectionItem.content.from.month]}{' '}
+        {workExperienceCollectionItem.content.from.year} -{' '}
+        {MonthNamesMap[workExperienceCollectionItem.content.to.month]}{' '}
+        {workExperienceCollectionItem.content.to.year}.
       </p>
       <ul className={classes('flex flex-row justify-center flex-wrap gap-4')}>
-        {workExperience.images.map((img) => (
-          <li key={img.source}>
-            <a href={img.source} target="_blank">
+        {imageModules.map((module) => (
+          <li key={module.image.src}>
+            <a href={module.image.src} target="_blank">
               <div
                 style={{
                   position: 'relative',
@@ -80,16 +84,17 @@ function createExperienceContent(workExperience) {
                   borderColor: '#0AC9EE',
                   borderStyle: 'double',
                   borderWidth: 4,
-                  width: 340,
-                  height: 191,
+                  width: 288,
+                  height: 162,
                 }}
               >
                 <Image
-                  src={img.source}
-                  alt={img.alt}
-                  title={img.alt}
+                  src={module.image}
+                  alt={module.alt}
+                  title={module.alt}
                   layout="fill"
                   objectFit="cover"
+                  res
                 />
               </div>
             </a>
@@ -97,7 +102,7 @@ function createExperienceContent(workExperience) {
         ))}
       </ul>
 
-      {workExperience.description.map((line) => (
+      {workExperienceCollectionItem.content.description.map((line) => (
         <p
           key={line}
           className={classes(
@@ -113,4 +118,4 @@ function createExperienceContent(workExperience) {
   );
 }
 
-export { createExperienceContent };
+export { transformWorkExperienceToContent };
