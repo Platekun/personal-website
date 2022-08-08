@@ -17,7 +17,11 @@ const MonthNames = {
 };
 
 function transformWorkExperienceToContent(options) {
-  const { workExperienceCollectionItem, imageModules } = options;
+  const {
+    workExperienceCollectionItem,
+    imageModules,
+    ignoreImages = false,
+  } = options;
 
   return (
     <>
@@ -72,34 +76,36 @@ function transformWorkExperienceToContent(options) {
         {MonthNames[workExperienceCollectionItem.content.to.month]}{' '}
         {workExperienceCollectionItem.content.to.year}.
       </p>
-      <ul className={classes('flex flex-row justify-center flex-wrap gap-4')}>
-        {imageModules.map((module) => (
-          <li key={module.image.src}>
-            <a href={module.image.src} target="_blank">
-              <div
-                style={{
-                  position: 'relative',
-                  overflow: 'hidden',
-                  borderRadius: 4,
-                  borderColor: '#0AC9EE',
-                  borderStyle: 'double',
-                  borderWidth: 4,
-                  width: 288,
-                  height: 162,
-                }}
-              >
-                <Image
-                  src={module.image}
-                  alt={module.alt}
-                  title={module.alt}
-                  layout="fill"
-                  objectFit="cover"
-                />
-              </div>
-            </a>
-          </li>
-        ))}
-      </ul>
+      {!ignoreImages ? (
+        <ul className={classes('flex flex-row justify-center flex-wrap gap-4')}>
+          {imageModules.map((module) => (
+            <li key={module.image.src}>
+              <a href={module.image.src} target="_blank">
+                <div
+                  style={{
+                    position: 'relative',
+                    overflow: 'hidden',
+                    borderRadius: 4,
+                    borderColor: '#0AC9EE',
+                    borderStyle: 'double',
+                    borderWidth: 4,
+                    width: 288,
+                    height: 162,
+                  }}
+                >
+                  <Image
+                    src={module.image}
+                    alt={module.alt}
+                    title={module.alt}
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : null}
 
       {workExperienceCollectionItem.content.description.map((line) => (
         <p

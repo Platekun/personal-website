@@ -1,3 +1,4 @@
+import React from 'react';
 import classes from 'classnames';
 
 import Head from 'atoms/head';
@@ -6,12 +7,17 @@ import { useController } from './home-page.controller';
 import FileIconButton from 'organisms/file-icon-button';
 import DocumentWindow from 'organisms/document-window';
 import DirectoryWindow from 'organisms/directory-window';
+import { transformProfileToContent } from 'transformers/resume-profile.transformer';
+import { transformRoleFunctionsToContent } from 'transformers/resume-functions.transformer';
+import { transformToolingToContent } from 'transformers/resume-tooling.transformer';
+import { transformSocialMediaToContent } from 'transformers/resume-social-media.transformer';
+import { transformWorkExperienceToContent } from 'transformers/resume-work-experience.transformer';
 
 const INITIAL_ANIMATION_DELAY_IN_SECONDS = 0.5;
 const FADE_IN_DURATION_IN_SECONDS = 0.5;
 
 function HomePageTemplate(props) {
-  const { computed, handlers } = useController(props);
+  const { data, computed, handlers } = useController(props);
 
   return (
     <>
@@ -124,6 +130,26 @@ function HomePageTemplate(props) {
             </div>
           </div>
         </div>
+
+        {!computed.isMobile ? (
+          <div className="hidden">
+            {transformProfileToContent(data.profileRecord)}
+            {transformRoleFunctionsToContent(data.functionsCollection)}
+            {data.workExperiencesCollection.collection.map(
+              (workExperienceCollectionItem) => (
+                <React.Fragment key={workExperienceCollectionItem.id}>
+                  {transformWorkExperienceToContent({
+                    workExperienceCollectionItem,
+                    ignoreImages: true,
+                  })}
+                </React.Fragment>
+              )
+            )}
+            {transformToolingToContent(data.toolingCollection)}
+            {transformSocialMediaToContent(data.socialMediaCollection)}
+          </div>
+        ) : null}
+
         {computed.processes.map((process) => {
           if (process.isDirectory) {
             return (

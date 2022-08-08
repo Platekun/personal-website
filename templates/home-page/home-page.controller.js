@@ -373,7 +373,13 @@ function useController(props) {
       topProccessId,
       ...breakpointHelpers,
     },
-    data: {},
+    data: {
+      profileRecord: resume.profileRecord,
+      workExperiencesCollection: resume.workExperiencesCollection,
+      functionsCollection: resume.functionsCollection,
+      toolingCollection: resume.toolingCollection,
+      socialMediaCollection: resume.socialMediaCollection,
+    },
     handlers: {
       openFileWithMouse,
       openFileWithKeyboard,
