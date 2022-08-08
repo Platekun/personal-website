@@ -300,7 +300,7 @@ function transformPropsIntoModels(props) {
 function useController(props) {
   const { resume } = props;
 
-  const { isMobile, breakpointHelpers } = usePageProps();
+  const { isMobile } = usePageProps();
 
   const desktop = useTransformer(resume, transformPropsIntoModels);
   const operativeSystem = useTransformer(desktop, OperativeSystemMachine, []);
@@ -371,7 +371,6 @@ function useController(props) {
       contents,
       processes,
       topProccessId,
-      ...breakpointHelpers,
     },
     data: {
       profileRecord: resume.profileRecord,
