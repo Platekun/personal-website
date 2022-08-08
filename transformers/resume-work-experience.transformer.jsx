@@ -36,7 +36,7 @@ function transformWorkExperienceToContent(options) {
           'lg:text-2xl'
         )}
       >
-        Company Name: {workExperienceCollectionItem.content.employer}.
+        Company name: {workExperienceCollectionItem.content.employer}.
       </p>
       <p
         className={classes(
@@ -45,7 +45,7 @@ function transformWorkExperienceToContent(options) {
           'lg:text-2xl'
         )}
       >
-        <span className="text-white">Company URL: </span>
+        <span className="text-white">Company website: </span>
         <a
           href={workExperienceCollectionItem.content.employerUrl}
           target="_blank"
@@ -94,7 +94,6 @@ function transformWorkExperienceToContent(options) {
                   title={module.alt}
                   layout="fill"
                   objectFit="cover"
-                  res
                 />
               </div>
             </a>

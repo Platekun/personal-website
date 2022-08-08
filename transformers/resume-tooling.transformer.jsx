@@ -24,7 +24,7 @@ function transformToolingToContent(toolingCollection) {
           <span className="text-white">*</span>{' '}
           <a
             key={toolingCollectionItem.id}
-            href={toolingCollectionItem.source}
+            href={toolingCollectionItem.content.source}
             target="_blank"
             className={classes(
               'text-[#0AC9EE] text-base',
